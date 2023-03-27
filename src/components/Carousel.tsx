@@ -82,7 +82,7 @@ const Carousel: React.FC<CarouselProps> = ({
   variant,
   disabled,
   cards = [],
-  cardWidth = 300,
+  cardWidth = 350,
   cardContainerStyles,
   carouselContainerStyles,
   paginationButtonStyles,
