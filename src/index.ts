@@ -1,3 +1,3 @@
-import MyCounter from './components/App';
+import Carousel from './components/Carousel';
 
-export { MyCounter };
+export { Carousel };

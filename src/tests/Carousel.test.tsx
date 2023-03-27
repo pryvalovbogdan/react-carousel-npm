@@ -3,10 +3,14 @@ import { render } from '@testing-library/react';
 
 import 'jest-canvas-mock';
 
-import { MyCounter } from '../';
+import { Carousel } from '../';
 
 describe('Common render', () => {
   it('renders without crashing', () => {
-    render(<MyCounter />);
+    render(
+      <Carousel i18n={'Cards'} cards={[]}>
+        <div>Card description</div>
+      </Carousel>,
+    );
   });
 });
