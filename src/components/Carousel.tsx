@@ -1,79 +1,10 @@
 import { Box } from './Box/Box';
-import React, { ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 
-import {
-  CarouselProps,
-  UseCarouselProps,
-  UseCarouselReturnedValues,
-  UseResizeProps,
-  UseResizeReturnedValues,
-} from '../types/CarouselTypes';
-
-const useCarousel = ({ selected, cards, currentPage }: UseCarouselProps): UseCarouselReturnedValues => {
-  const totalCount = cards.length;
-
-  const range = (start: number, end: number) => {
-    const length = end - start;
-
-    return Array.from({ length }, (_, idx) => idx + 1);
-  };
-
-  const selectedCards = cards.filter((_el, index) => {
-    if (currentPage !== 1) {
-      return (currentPage - 1) * selected <= index + currentPage && index + currentPage - 1 < currentPage * selected;
-    }
-
-    return (currentPage - 1) * selected <= index && index < currentPage * selected;
-  });
-
-  const paginationRange = useMemo(() => {
-    const totalPageCount = Math.ceil(totalCount / selected + ((totalCount / selected) * 2 - 1) / selected);
-
-    const pageWithoutDots = range(0, totalPageCount);
-
-    return { pageWithoutDots, totalPageCount };
-  }, [totalCount, selected]);
-
-  return { ...paginationRange, selectedCards };
-};
-
-const useResize = ({ ref, setSelected, cardWidth }: UseResizeProps): UseResizeReturnedValues => {
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    if (width) {
-      const selected = Math.ceil(width / cardWidth);
-
-      setSelected(selected > 1 ? selected : 2);
-    }
-  }, [width, cardWidth, setSelected]);
-
-  useLayoutEffect(() => {
-    const updateSize = () => {
-      if (ref && ref.current) {
-        setWidth(ref.current.offsetWidth);
-      }
-    };
-
-    window.addEventListener('resize', updateSize);
-
-    updateSize();
-
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-
-  return { width, setWidth };
-};
-
-const renderChildren = (children: React.ReactNode, props: any) => {
-  return React.Children.map<ReactNode, ReactNode>(children, child => {
-    if (React.isValidElement(child)) {
-      return React.cloneElement(child, props);
-    }
-
-    return child;
-  });
-};
+import { CarouselProps, UseResizeProps } from '../types/CarouselTypes';
+import { useCarousel } from '../hooks/useCarusel';
+import { useResize } from '../hooks/useResize';
+import { renderChildren } from '../utils';
 
 const Carousel: React.FC<CarouselProps> = ({
   i18n,
