@@ -1,4 +1,4 @@
-import { Box } from './Box/Box';
+import { Box } from './Box';
 import React, { useRef, useState } from 'react';
 
 import { CarouselProps, UseResizeProps } from '../types/CarouselTypes';

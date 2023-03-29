@@ -13,7 +13,7 @@ import {
 import styled from 'styled-components';
 import css, { get } from '@styled-system/css';
 import shouldForwardProp from '@styled-system/should-forward-prop';
-import { BoxProps } from './types';
+import { BoxProps } from '../types/BoxTypes';
 
 const base = (props: BoxProps) => css(props.__css)(props.theme);
 const variant = ({ theme, variant = '', tx = 'variants' }: BoxProps) =>
