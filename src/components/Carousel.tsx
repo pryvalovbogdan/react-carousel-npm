@@ -35,6 +35,8 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const { width } = useResize({ ref, setSelected, cardWidth } as UseResizeProps);
 
+  const lastPage = pageWithoutDots && pageWithoutDots[pageWithoutDots.length - 1];
+
   const goToNextPage = () => onPageChange(currentPage + 1);
 
   const goToPrevPage = () => onPageChange(currentPage - 1);
@@ -45,7 +47,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <Box
-      display={'flex'}
+      display='flex'
       justifyContent='end'
       flexDirection='column'
       alignItems='end'
@@ -55,35 +57,34 @@ const Carousel: React.FC<CarouselProps> = ({
       style={carouselContainerStyles}
       data-testid={`Carousel-${i18n}`}
     >
-      {variant !== 'withoutArrows' && !!cards.length && (
-        <Box display={'flex'} justifyContent='space-between' alignItems='center' width='100%'>
-          {header}
-          {totalPageCount > 1 && (
-            <Box>
-              <Box style={styles.navButton} color='neutral' onClick={goToPrevPage}>
-                Prev
-              </Box>
+      <Box display={'flex'} justifyContent='space-between' alignItems='center' width='100%'>
+        {header}
+        {variant !== 'withoutArrows' && !!cards.length && totalPageCount > 1 && (
+          <Box>
+            <button style={styles.navButton} disabled={disabled || currentPage === 1} onClick={goToPrevPage}>
+              Prev
+            </button>
 
-              <Box style={styles.navButton} color='neutral' onClick={goToNextPage}>
-                Next
-              </Box>
-            </Box>
-          )}
-        </Box>
-      )}
-      <Box display={'flex'} justifyContent='start' width={1} style={cardContainerStyles}>
+            <button style={styles.navButton} disabled={disabled || currentPage === lastPage} onClick={goToNextPage}>
+              Next
+            </button>
+          </Box>
+        )}
+      </Box>
+
+      <Box display='flex' justifyContent='start' width={1} style={cardContainerStyles}>
         {!cards.length ? (
           <Box
             width={1}
             mt='20px'
             borderRadius='12px'
             height='200px'
-            display={'flex'}
+            display='flex'
             justifyContent='center'
             alignItems='center'
             backgroundColor={'grey'}
           >
-            <Box fontSize='14px' color={'white'}>
+            <Box fontSize='14px' color='white'>
               {noCardsText}
             </Box>
           </Box>
@@ -150,6 +151,7 @@ const Carousel: React.FC<CarouselProps> = ({
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return (
               <Box
+                as='button'
                 width={24}
                 height={4}
                 border='none'
@@ -187,5 +189,6 @@ const styles = {
   },
   navButton: {
     padding: '0 10px 0 12px',
+    border: 'none',
   },
 };
