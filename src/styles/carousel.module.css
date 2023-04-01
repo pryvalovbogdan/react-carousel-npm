@@ -1,0 +1,93 @@
+.carousel-container {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  /*align-items: end;*/
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel-container__header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carousel-container__body {
+  display: flex;
+  justify-content: start;
+  width: 100%;
+}
+
+.icon {
+  display: inline-block;
+  color: inherit;
+  opacity: 1;
+
+  width: 10px;
+  height: 10px;
+
+  border-style: solid;
+  border-color: currentColor;
+  border-width: 2px 2px 0 0;
+}
+
+.icon__previous {
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.icon__next {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.button {
+  border: none;
+  background: none;
+  padding: 12px;
+}
+
+.button:hover {
+  background: hsla(0, 0%, 100%, 0.2);
+}
+
+.no-cards-container {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 12px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.carousel-container__text {
+  font-style: italic;
+  line-height: 20px;
+  font-size: 14px;
+  color: #666666;
+}
+
+.side-card-box {
+  position: absolute;
+  height: 0;
+  width: 100%;
+}
+
+.carousel-container__pagination-box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+  overflow-x: auto;
+}
+
+.pagination-button {
+  width: 24px;
+  height: 4px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 2px;
+}

@@ -5,6 +5,9 @@
   "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
   "modulePathIgnorePatterns": ["<rootDir>/dist/"],
+  "moduleNameMapper": {
+    "\\.(css|less|scss|sss|styl)$": "<rootDir>/node_modules/jest-css-modules"
+  },
   "testEnvironment": "jsdom",
   "ignore": ["dist"]
 }
