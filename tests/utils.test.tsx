@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderChildren } from '../utils';
+import { renderChildren } from '../src/utils';
 
 describe('renderChildren', () => {
   it('returns the children as-is if they are not valid React elements', () => {
