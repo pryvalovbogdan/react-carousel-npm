@@ -1,10 +1,10 @@
-import { Box } from './Box';
 import React, { useRef, useState } from 'react';
 
 import { CarouselProps, UseResizeProps } from '../types/CarouselTypes';
 import { useCarousel } from '../hooks/useCarusel';
 import { useResize } from '../hooks/useResize';
 import { renderChildren } from '../utils';
+import stylesCss from '../styles/carousel.module.css';
 
 const Carousel: React.FC<CarouselProps> = ({
   i18n,
@@ -46,67 +46,47 @@ const Carousel: React.FC<CarouselProps> = ({
   }
 
   return (
-    <Box
-      display='flex'
-      justifyContent='end'
-      flexDirection='column'
-      alignItems='end'
-      overflow='hidden'
-      width='100%'
+    <div
+      className={stylesCss['carousel-container']}
       ref={ref}
       style={carouselContainerStyles}
-      data-testid={`Carousel-${i18n}`}
+      data-testid={`carousel-${i18n}`}
     >
-      <Box display={'flex'} justifyContent='space-between' alignItems='center' width='100%'>
+      <div className={stylesCss['carousel-container__header']}>
         {header}
         {variant !== 'withoutArrows' && !!cards.length && totalPageCount > 1 && (
-          <Box>
-            <button style={styles.navButton} disabled={disabled || currentPage === 1} onClick={goToPrevPage}>
-              Prev
+          <div>
+            <button
+              className={stylesCss['button']}
+              color='neutral'
+              disabled={disabled || currentPage === 1}
+              onClick={goToPrevPage}
+            >
+              <a className={`${stylesCss['icon']} ${stylesCss['icon__previous']}`} />
             </button>
-
-            <button style={styles.navButton} disabled={disabled || currentPage === lastPage} onClick={goToNextPage}>
-              Next
+            <button
+              className={stylesCss['button']}
+              color='neutral'
+              disabled={disabled || currentPage === lastPage}
+              onClick={goToNextPage}
+            >
+              <a className={`${stylesCss['icon']} ${stylesCss['icon__next']}`} />
             </button>
-          </Box>
+          </div>
         )}
-      </Box>
-
-      <Box display='flex' justifyContent='start' width={1} style={cardContainerStyles}>
+      </div>
+      <div className={stylesCss['carousel-container__body']} style={cardContainerStyles}>
         {!cards.length ? (
-          <Box
-            width={1}
-            mt='20px'
-            borderRadius='12px'
-            height='200px'
-            display='flex'
-            justifyContent='center'
-            alignItems='center'
-            backgroundColor={'grey'}
-          >
-            <Box fontSize='14px' color='white'>
-              {noCardsText}
-            </Box>
-          </Box>
+          <div className={stylesCss['no-cards-container']}>
+            <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+          </div>
         ) : (
           selectedCards.map((item, index) => {
             if (totalPageCount > 1 && selectedCards.length < 2) {
               return (
-                <Box
-                  display={'flex'}
-                  width={1}
-                  key={'no-cards'}
-                  mt='20px'
-                  borderRadius='12px'
-                  height='200px'
-                  justifyContent='center'
-                  alignItems='center'
-                  backgroundColor={'grey'}
-                >
-                  <Box fontSize='14px' color={'white'}>
-                    {noCardsText}
-                  </Box>
-                </Box>
+                <div key='no-cards-container' className={stylesCss['no-cards-container']}>
+                  <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+                </div>
               );
             }
 
@@ -116,7 +96,7 @@ const Carousel: React.FC<CarouselProps> = ({
               (index === selected - 1 && currentPage === 1)
             ) {
               return (
-                <Box position={'absolute'} height={0} width='100%' right={index === 0 ? 'auto' : 0} key={item.key}>
+                <div className={stylesCss['side-card-box']} style={{ right: index === 0 ? 'auto' : 0 }} key={item.key}>
                   {renderChildren(children, {
                     ...item,
                     style: styles.sideCardParent,
@@ -131,7 +111,7 @@ const Carousel: React.FC<CarouselProps> = ({
                           : `${width <= cardWidth ? '-95%' : width - selected * cardWidth - marginCard * 2 + 'px'}`,
                     },
                   })}
-                </Box>
+                </div>
               );
             }
 
@@ -145,29 +125,28 @@ const Carousel: React.FC<CarouselProps> = ({
             });
           })
         )}
-      </Box>
+      </div>
       {variant !== 'withoutPagination' && !!cards.length && totalPageCount > 1 && (
-        <Box width={1} display={'flex'} justifyContent='center' mt='8px' overflowX='auto'>
+        <div className={stylesCss['carousel-container__pagination-box']}>
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return (
-              <Box
-                as='button'
-                width={24}
-                height={4}
-                border='none'
-                mr='8px'
+              <button
+                className={stylesCss['pagination-button']}
+                disabled={disabled}
                 key={`${item.key}-button`}
-                backgroundColor={currentPage === index + 1 ? 'orange' : 'grey'}
-                borderRadius='2px'
                 onClick={() => onPageChange(index + 1)}
-                style={{ ...paginationButtonStyles, cursor: disabled ? 'not-allowed' : 'pointer' }}
+                style={{
+                  ...paginationButtonStyles,
+                  cursor: disabled ? 'not-allowed' : 'pointer',
+                  backgroundColor: currentPage === index + 1 ? 'hsla(200, 85%, 60%, 0.8)' : 'rgba(0, 0, 0, 0.1)',
+                }}
                 data-testid={`pagination-Button${index + 1}`}
               />
             );
           })}
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   );
 };
 
@@ -186,9 +165,5 @@ const styles = {
   sideCardChild: {
     position: 'absolute',
     top: 0,
-  },
-  navButton: {
-    padding: '0 10px 0 12px',
-    border: 'none',
   },
 };
