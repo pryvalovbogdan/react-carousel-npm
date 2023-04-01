@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useResize } from '../hooks/useResize';
+import { useResize } from '../src/hooks/useResize';
 
 describe('useResize', () => {
   it('should update the selected value when the width changes', () => {

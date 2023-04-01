@@ -17,9 +17,9 @@ const Carousel: React.FC<CarouselProps> = ({
   cardContainerStyles,
   carouselContainerStyles,
   paginationButtonStyles,
-  marginCard = 0,
+  marginCard = 1,
   header,
-  noCardsText,
+  noCardsText = 'No cards selected',
   children,
 }) => {
   const [selected, setSelected] = useState(defaultCardsCount || 3);
@@ -99,12 +99,16 @@ const Carousel: React.FC<CarouselProps> = ({
                 <div className={stylesCss['side-card-box']} style={{ right: index === 0 ? 'auto' : 0 }} key={item.key}>
                   {renderChildren(children, {
                     ...item,
+                    ...styles.card,
+                    maxWidth: cardWidth,
                     style: styles.sideCardParent,
                   })}
                   {renderChildren(children, {
                     ...item,
                     style: {
                       ...styles.sideCardChild,
+                      ...styles.card,
+                      maxWidth: cardWidth,
                       right:
                         index === 0
                           ? `calc(100% + ${marginCard}px`
@@ -119,6 +123,7 @@ const Carousel: React.FC<CarouselProps> = ({
               ...item,
               style: {
                 ...styles.card,
+                maxWidth: cardWidth,
                 marginLeft: (index === 0 && currentPage === 1) || (index === 1 && currentPage !== 1) ? 0 : marginCard,
                 marginRight: selectedCards.length > selected && index === selectedCards.length - 2 ? 0 : marginCard,
               },

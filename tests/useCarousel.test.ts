@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { useCarousel } from '../hooks/useCarusel';
+import { useCarousel } from '../src/hooks/useCarusel';
 
 describe('useCarousel', () => {
   const cards = [

@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 
 import 'jest-canvas-mock';
 
-import { Carousel } from '../';
+import { Carousel } from '../src';
 
 describe('Common render', () => {
   it('renders without crashing', () => {
