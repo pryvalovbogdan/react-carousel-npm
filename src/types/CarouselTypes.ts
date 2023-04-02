@@ -4,7 +4,7 @@ export interface CarouselProps {
   i18n: string;
   defaultCardsCount?: number;
   defaultActivePage?: number;
-  variant?: 'carousels' | 'withoutArrows' | 'withoutPagination';
+  variant?: 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
   disabled?: boolean;
   cards: any[];
   children: React.ReactNode;
@@ -21,6 +21,7 @@ export interface UseCarouselProps {
   selected?: number | any;
   cards: any[];
   currentPage: number;
+  variant?: string;
 }
 
 export interface UseCarouselReturnedValues {

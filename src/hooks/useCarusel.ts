@@ -1,7 +1,7 @@
 import { UseCarouselProps, UseCarouselReturnedValues } from '../types/CarouselTypes';
 import { useMemo } from 'react';
 
-export const useCarousel = ({ selected, cards, currentPage }: UseCarouselProps): UseCarouselReturnedValues => {
+export const useCarousel = ({ selected, cards, currentPage, variant }: UseCarouselProps): UseCarouselReturnedValues => {
   const totalCount = cards.length;
 
   const range = (start: number, end: number) => {
@@ -11,7 +11,7 @@ export const useCarousel = ({ selected, cards, currentPage }: UseCarouselProps):
   };
 
   const selectedCards = cards.filter((_el, index) => {
-    if (currentPage !== 1) {
+    if (currentPage !== 1 && variant === 'withSideCards') {
       return (currentPage - 1) * selected <= index + currentPage && index + currentPage - 1 < currentPage * selected;
     }
 
@@ -19,12 +19,18 @@ export const useCarousel = ({ selected, cards, currentPage }: UseCarouselProps):
   });
 
   const paginationRange = useMemo(() => {
-    const totalPageCount = Math.ceil(totalCount / selected + ((totalCount / selected) * 2 - 1) / selected);
+    let totalPageCount = totalCount / selected;
 
-    const pageWithoutDots = range(0, totalPageCount);
+    if (variant === 'withSideCards') {
+      totalPageCount += ((totalCount / selected) * 2 - 1) / selected;
+    }
 
-    return { pageWithoutDots, totalPageCount };
-  }, [totalCount, selected]);
+    const totalPageCountRound = Math.ceil(totalPageCount);
+
+    const pageWithoutDots = range(0, totalPageCountRound);
+
+    return { pageWithoutDots, totalPageCount: totalPageCountRound };
+  }, [totalCount, selected, variant]);
 
   return { ...paginationRange, selectedCards };
 };
