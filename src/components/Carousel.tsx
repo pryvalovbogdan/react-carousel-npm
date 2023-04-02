@@ -10,7 +10,7 @@ const Carousel: React.FC<CarouselProps> = ({
   i18n,
   defaultActivePage,
   defaultCardsCount,
-  variant,
+  variant = 'regular',
   disabled,
   cards = [],
   cardWidth = 350,
@@ -31,6 +31,7 @@ const Carousel: React.FC<CarouselProps> = ({
     selected,
     cards,
     currentPage,
+    variant,
   });
 
   const { width } = useResize({ ref, setSelected, cardWidth } as UseResizeProps);
@@ -82,41 +83,47 @@ const Carousel: React.FC<CarouselProps> = ({
           </div>
         ) : (
           selectedCards.map((item, index) => {
-            if (totalPageCount > 1 && selectedCards.length < 2) {
-              return (
-                <div key='no-cards-container' className={stylesCss['no-cards-container']}>
-                  <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-                </div>
-              );
-            }
+            if (variant === 'withSideCards') {
+              if (totalPageCount > 1 && selectedCards.length < 2) {
+                return (
+                  <div key='no-cards-container' className={stylesCss['no-cards-container']}>
+                    <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+                  </div>
+                );
+              }
 
-            if (
-              (index === 0 && currentPage !== 1) ||
-              (selected < selectedCards.length && index === selectedCards.length - 1) ||
-              (index === selected - 1 && currentPage === 1)
-            ) {
-              return (
-                <div className={stylesCss['side-card-box']} style={{ right: index === 0 ? 'auto' : 0 }} key={item.key}>
-                  {renderChildren(children, {
-                    ...item,
-                    ...styles.card,
-                    maxWidth: cardWidth,
-                    style: styles.sideCardParent,
-                  })}
-                  {renderChildren(children, {
-                    ...item,
-                    style: {
-                      ...styles.sideCardChild,
+              if (
+                (index === 0 && currentPage !== 1) ||
+                (selected < selectedCards.length && index === selectedCards.length - 1) ||
+                (index === selected - 1 && currentPage === 1)
+              ) {
+                return (
+                  <div
+                    className={stylesCss['side-card-box']}
+                    style={{ right: index === 0 ? 'auto' : 0 }}
+                    key={item.key}
+                  >
+                    {renderChildren(children, {
+                      ...item,
                       ...styles.card,
                       maxWidth: cardWidth,
-                      right:
-                        index === 0
-                          ? `calc(100% + ${marginCard}px`
-                          : `${width <= cardWidth ? '-95%' : width - selected * cardWidth - marginCard * 2 + 'px'}`,
-                    },
-                  })}
-                </div>
-              );
+                      style: styles.sideCardParent,
+                    })}
+                    {renderChildren(children, {
+                      ...item,
+                      style: {
+                        ...styles.sideCardChild,
+                        ...styles.card,
+                        maxWidth: cardWidth,
+                        right:
+                          index === 0
+                            ? `calc(100% + ${marginCard}px`
+                            : `${width <= cardWidth ? '-95%' : width - selected * cardWidth - marginCard * 2 + 'px'}`,
+                      },
+                    })}
+                  </div>
+                );
+              }
             }
 
             return renderChildren(children, {
