@@ -3,8 +3,9 @@ import React, { useRef, useState } from 'react';
 import { CarouselProps, UseResizeProps } from '../types/CarouselTypes';
 import { useCarousel } from '../hooks/useCarusel';
 import { useResize } from '../hooks/useResize';
-import { renderChildren } from '../utils';
+import { renderChild, renderChildren } from '../utils';
 import stylesCss from '../styles/carousel.module.css';
+import HeaderArrows from './HeaderArrows';
 
 const Carousel: React.FC<CarouselProps> = ({
   i18n,
@@ -21,6 +22,8 @@ const Carousel: React.FC<CarouselProps> = ({
   header,
   noCardsText = 'No cards selected',
   children,
+  CustomArrowBtn,
+  CustomPaginationBtn,
 }) => {
   const [selected, setSelected] = useState(defaultCardsCount || 3);
   const [currentPage, onPageChange] = useState(defaultActivePage || 1);
@@ -57,22 +60,28 @@ const Carousel: React.FC<CarouselProps> = ({
         {header}
         {variant !== 'withoutArrows' && !!cards.length && totalPageCount > 1 && (
           <div>
-            <button
-              className={stylesCss['button']}
-              color='neutral'
-              disabled={disabled || currentPage === 1}
-              onClick={goToPrevPage}
-            >
-              <a className={`${stylesCss['icon']} ${stylesCss['icon__previous']}`} />
-            </button>
-            <button
-              className={stylesCss['button']}
-              color='neutral'
-              disabled={disabled || currentPage === lastPage}
-              onClick={goToNextPage}
-            >
-              <a className={`${stylesCss['icon']} ${stylesCss['icon__next']}`} />
-            </button>
+            {CustomArrowBtn ? (
+              <>
+                {renderChild(CustomArrowBtn, {
+                  disabled: disabled || currentPage === 1,
+                  onClick: goToPrevPage,
+                  isLeftArrow: true,
+                })}
+                {renderChild(CustomArrowBtn, {
+                  disabled: disabled || currentPage === lastPage,
+                  onClick: goToNextPage,
+                  isLeftArrow: false,
+                })}
+              </>
+            ) : (
+              <HeaderArrows
+                disabled={disabled}
+                lastPage={lastPage}
+                currentPage={currentPage}
+                goToNextPage={goToNextPage}
+                goToPrevPage={goToPrevPage}
+              />
+            )}
           </div>
         )}
       </div>
@@ -141,7 +150,14 @@ const Carousel: React.FC<CarouselProps> = ({
       {variant !== 'withoutPagination' && !!cards.length && totalPageCount > 1 && (
         <div className={stylesCss['carousel-container__pagination-box']}>
           {[...cards].splice(0, totalPageCount).map((item, index) => {
-            return (
+            return CustomPaginationBtn ? (
+              renderChild(CustomPaginationBtn, {
+                onClick: () => onPageChange(index + 1),
+                key: `${item.key}-button`,
+                disabled: disabled,
+                isActivePage: currentPage === index + 1,
+              })
+            ) : (
               <button
                 className={stylesCss['pagination-button']}
                 disabled={disabled}

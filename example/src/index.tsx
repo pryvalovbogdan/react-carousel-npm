@@ -29,6 +29,26 @@ const Card = (props: any) => {
   );
 };
 
+const CustomArrowBtn = (props: any) => {
+  const { isLeftArrow, ...rest } = props;
+
+  console.log('arrow props', props);
+
+  return <button {...rest}>{isLeftArrow ? '<' : '>'}</button>;
+};
+
+const CustomPaginationBtn = (props: any) => {
+  const { isActivePage, ...rest } = props;
+
+  console.log('pagination btn', props);
+
+  return (
+    <button {...rest} style={{ backgroundColor: isActivePage ? 'orange' : 'grey' }}>
+      click
+    </button>
+  );
+};
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
@@ -66,6 +86,8 @@ root.render(
           },
         ]}
         noCardsText={'No cards selected'}
+        CustomPaginationBtn={<CustomPaginationBtn />}
+        CustomArrowBtn={<CustomArrowBtn />}
       >
         <Card />
       </Carousel>
