@@ -18,6 +18,7 @@ describe('useCarousel', () => {
     selected: 3,
     cards,
     currentPage: 1,
+    variant: 'withSideCards',
   };
 
   it('should return the correct selected cards for the first page', () => {

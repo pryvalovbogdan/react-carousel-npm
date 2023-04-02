@@ -15,6 +15,8 @@ export interface CarouselProps {
   marginCard?: number;
   noCardsText?: string;
   header?: React.ReactNode;
+  CustomArrowBtn?: React.ReactNode;
+  CustomPaginationBtn?: React.ReactNode;
 }
 
 export interface UseCarouselProps {
@@ -39,4 +41,12 @@ export interface UseResizeProps {
 export interface UseResizeReturnedValues {
   width: number;
   setWidth: (width: number) => void;
+}
+
+export interface IHeaderArrows {
+  disabled: boolean | undefined;
+  currentPage: number;
+  lastPage: number;
+  goToPrevPage: () => void;
+  goToNextPage: () => void;
 }
