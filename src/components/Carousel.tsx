@@ -125,7 +125,7 @@ const Carousel: React.FC<CarouselProps> = ({
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return CustomPaginationBtn ? (
               renderChild(CustomPaginationBtn, {
-                onClick: handleNextPage,
+                onClick: () => onCurrentPage(index + 1),
                 key: `${item.key}-button`,
                 disabled: disabled,
                 isActivePage: currentPage === index + 1,
@@ -135,7 +135,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 className={stylesCss['pagination-button']}
                 disabled={disabled}
                 key={`${item.key}-button`}
-                onClick={handleNextPage}
+                onClick={() => onCurrentPage(index + 1)}
                 style={{
                   ...paginationButtonStyles,
                   cursor: disabled ? 'not-allowed' : 'pointer',
