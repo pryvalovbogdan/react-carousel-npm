@@ -98,7 +98,8 @@ root.render(
 );
 ```
 
-![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/RegularCarousel.gif)
+![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/RegularCarousel.gif)
+<img src="https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/RegularCarousel.gif" width="200px">
 
 [npm-url]: https://www.npmjs.com/package/react-carousel-cards-npm
 [npm-image]: https://img.shields.io/npm/v/react-carousel-cards-npm
