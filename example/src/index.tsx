@@ -81,25 +81,30 @@ root.render(
   <React.StrictMode>
     <div
       style={{
-        background: '#1000015d',
-        /** Add position relative for wrapper and overflowX hidden for hidding side cards **/
-        position: 'relative',
+        background: 'orange',
         overflowX: 'hidden',
-        padding: '0 30px 20px',
+        padding: '30px 30px 20px',
+        height: '90vh',
       }}
     >
-      <Carousel
-        i18n='cards'
-        header={<h1>Carousel</h1>}
-        cardWidth={300}
-        marginCard={5}
-        cards={cards.map(card => ({ ...card, key: card.id }))}
-        noCardsText={'No cards selected'}
-        CustomPaginationBtn={<CustomPaginationBtn />}
-        CustomArrowBtn={<CustomArrowBtn />}
+      <div
+        style={{
+          /** Add position relative for wrapper and overflowX hidden for hidding side cards **/
+          position: 'relative',
+        }}
       >
-        <Card />
-      </Carousel>
+        <Carousel
+          i18n='cards'
+          header={<h1>Carousel</h1>}
+          cardWidth={400}
+          marginCard={16}
+          cards={cards.map(card => ({ ...card, key: card.id }))}
+          noCardsText={'No cards selected'}
+          variant={'withSideCards'}
+        >
+          <Card />
+        </Carousel>
+      </div>
     </div>
   </React.StrictMode>,
 );

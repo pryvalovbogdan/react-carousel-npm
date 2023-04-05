@@ -1,6 +1,6 @@
 {
   "name": "react-carousel-cards-npm",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Carousel with falling on the sides cards",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
