@@ -97,9 +97,9 @@ root.render(
 	</React.StrictMode>,
 );
 ```
-
-![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/RegularCarousel.gif)
-<img src="https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/RegularCarousel.gif" width="200px">
+***
+![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/NoCards.png)
+<img src="https://lh3.googleusercontent.com/pw/AMWts8CAg9NmkDPw8d5d5hDYvzmxywLCgsLX6AaP6_v4zahHrtooUN-wrtLbkwzHJ5Jt-ITOypxaI1NnIOv8h_rYQjCMbXCYQxqQ1g1-ycELQtnGosvtDXf_iGsAtLcXimJWRxhzH7rUPuFXbwpl4lTwq0Xm=w1680-h602-s-no" width="200px">
 
 [npm-url]: https://www.npmjs.com/package/react-carousel-cards-npm
 [npm-image]: https://img.shields.io/npm/v/react-carousel-cards-npm
