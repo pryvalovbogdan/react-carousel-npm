@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test CustomArrowsWrapper snapshot Notes 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        disabled=""
+      >
+        Child content
+      </div>
+      <div>
+        Child content
+      </div>
+    </div>
+  </div>
+</body>
+`;

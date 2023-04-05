@@ -27,7 +27,7 @@ export interface UseCarouselProps {
 }
 
 export interface UseCarouselReturnedValues {
-  pageWithoutDots: any[];
+  rangeBottomPagination: any[];
   totalPageCount: number;
   selectedCards: any[];
 }
@@ -51,4 +51,24 @@ export interface IHeaderArrows {
   lastPage: number;
   goToPrevPage: () => void;
   goToNextPage: () => void;
+}
+
+export interface ISideCard {
+  child: React.ReactNode;
+  cardWidth: number | undefined;
+  item: any;
+  width: number;
+  index: number;
+  selected: number;
+  widthCard: number;
+  marginCard: number | undefined;
+}
+
+export interface ICustomArrowsWrapper {
+  CustomArrowBtn: React.ReactNode;
+  disabled: boolean | undefined;
+  currentPage: number;
+  lastPage: number;
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
 }

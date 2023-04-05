@@ -5,7 +5,8 @@ import { useCarousel } from '../hooks/useCarusel';
 import { useResize } from '../hooks/useResize';
 import { renderChild, renderChildren } from '../utils';
 import stylesCss from '../styles/carousel.module.css';
-import HeaderArrows from './HeaderArrows';
+import SideCard from './SideCard';
+import CustomArrowsWrapper from './CustomArrowsWrapper';
 
 const Carousel: React.FC<CarouselProps> = ({
   i18n,
@@ -14,7 +15,7 @@ const Carousel: React.FC<CarouselProps> = ({
   variant = 'regular',
   disabled,
   cards = [],
-  cardWidth = 350,
+  cardWidth = 300,
   cardContainerStyles,
   carouselContainerStyles,
   paginationButtonStyles,
@@ -26,12 +27,12 @@ const Carousel: React.FC<CarouselProps> = ({
   CustomPaginationBtn,
 }) => {
   const [selected, setSelected] = useState(defaultCardsCount || 3);
-  const [currentPage, onPageChange] = useState(defaultActivePage || 1);
+  const [currentPage, onCurrentPage] = useState(defaultActivePage || 1);
 
   const ref = useRef<HTMLDivElement>(null!);
   const refCard = useRef<HTMLDivElement>(null!);
 
-  const { pageWithoutDots, totalPageCount, selectedCards } = useCarousel({
+  const { rangeBottomPagination, totalPageCount, selectedCards } = useCarousel({
     selected,
     cards,
     currentPage,
@@ -40,19 +41,14 @@ const Carousel: React.FC<CarouselProps> = ({
 
   const { width, widthCard } = useResize({ ref, setSelected, cardWidth, refCard } as UseResizeProps);
 
-  const lastPage = pageWithoutDots && pageWithoutDots[pageWithoutDots.length - 1];
-
-  const goToNextPage = () => onPageChange(currentPage + 1);
-
-  const goToPrevPage = () => onPageChange(currentPage - 1);
+  const lastPage = rangeBottomPagination && rangeBottomPagination[rangeBottomPagination.length - 1];
 
   if (totalPageCount < currentPage && totalPageCount > 0) {
-    onPageChange(totalPageCount);
+    onCurrentPage(totalPageCount);
   }
 
-  const marginRight = width < 900 ? marginCard / 2 : marginCard * (selected - 1);
-
-  const marginLeft = width < 900 ? marginCard / 2 : marginCard;
+  const handleNextPage = () => onCurrentPage(currentPage + 1);
+  const handlePrevPage = () => onCurrentPage(currentPage - 1);
 
   return (
     <div
@@ -63,31 +59,15 @@ const Carousel: React.FC<CarouselProps> = ({
     >
       <div className={stylesCss['carousel-container__header']}>
         {header}
-        {variant !== 'withoutArrows' && !!cards.length && totalPageCount > 1 && (
-          <div>
-            {CustomArrowBtn ? (
-              <>
-                {renderChild(CustomArrowBtn, {
-                  disabled: disabled || currentPage === 1,
-                  onClick: goToPrevPage,
-                  isLeftArrow: true,
-                })}
-                {renderChild(CustomArrowBtn, {
-                  disabled: disabled || currentPage === lastPage,
-                  onClick: goToNextPage,
-                  isLeftArrow: false,
-                })}
-              </>
-            ) : (
-              <HeaderArrows
-                disabled={disabled}
-                lastPage={lastPage}
-                currentPage={currentPage}
-                goToNextPage={goToNextPage}
-                goToPrevPage={goToPrevPage}
-              />
-            )}
-          </div>
+        {variant !== 'withoutArrows' && totalPageCount > 1 && (
+          <CustomArrowsWrapper
+            CustomArrowBtn={CustomArrowBtn}
+            currentPage={currentPage}
+            lastPage={lastPage}
+            disabled={disabled}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+          />
         )}
       </div>
       <div className={stylesCss['carousel-container__body']} style={cardContainerStyles}>
@@ -114,30 +94,17 @@ const Carousel: React.FC<CarouselProps> = ({
                   (index === selected - 1 && currentPage === 1)
                 ) {
                   return (
-                    <div
-                      className={stylesCss['side-card-box']}
-                      style={{ right: index === 0 ? 'auto' : 0 }}
+                    <SideCard
+                      index={index}
+                      item={item}
+                      width={width}
                       key={item.key}
-                    >
-                      {renderChildren(children, {
-                        ...item,
-                        ...styles.card,
-                        maxWidth: cardWidth,
-                        style: styles.sideCardParent,
-                      })}
-                      {renderChildren(children, {
-                        ...item,
-                        style: {
-                          ...styles.sideCardChild,
-                          ...styles.card,
-                          maxWidth: cardWidth,
-                          right:
-                            index === 0
-                              ? `calc(100% + ${marginLeft}px`
-                              : width - (selected - 1) * widthCard - widthCard - marginRight + 'px',
-                        },
-                      })}
-                    </div>
+                      selected={selected}
+                      cardWidth={cardWidth}
+                      widthCard={widthCard}
+                      marginCard={marginCard}
+                      child={children}
+                    />
                   );
                 }
               }
@@ -153,12 +120,12 @@ const Carousel: React.FC<CarouselProps> = ({
           )}
         </div>
       </div>
-      {variant !== 'withoutPagination' && !!cards.length && totalPageCount > 1 && (
+      {variant !== 'withoutPagination' && totalPageCount > 1 && (
         <div className={stylesCss['carousel-container__pagination-box']}>
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return CustomPaginationBtn ? (
               renderChild(CustomPaginationBtn, {
-                onClick: () => onPageChange(index + 1),
+                onClick: handleNextPage,
                 key: `${item.key}-button`,
                 disabled: disabled,
                 isActivePage: currentPage === index + 1,
@@ -168,7 +135,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 className={stylesCss['pagination-button']}
                 disabled={disabled}
                 key={`${item.key}-button`}
-                onClick={() => onPageChange(index + 1)}
+                onClick={handleNextPage}
                 style={{
                   ...paginationButtonStyles,
                   cursor: disabled ? 'not-allowed' : 'pointer',
@@ -189,15 +156,5 @@ export default Carousel;
 const styles = {
   card: {
     width: '100%',
-  },
-  sideCardParent: {
-    width: '30%',
-    height: '0',
-    overflow: 'hidden',
-    border: 'none',
-  },
-  sideCardChild: {
-    position: 'absolute',
-    top: 0,
   },
 };

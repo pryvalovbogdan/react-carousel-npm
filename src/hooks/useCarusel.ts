@@ -27,9 +27,9 @@ export const useCarousel = ({ selected, cards, currentPage, variant }: UseCarous
 
     const totalPageCountRound = Math.ceil(totalPageCount);
 
-    const pageWithoutDots = range(0, totalPageCountRound);
+    const rangeBottomPagination = range(0, totalPageCountRound);
 
-    return { pageWithoutDots, totalPageCount: totalPageCountRound };
+    return { rangeBottomPagination, totalPageCount: totalPageCountRound };
   }, [totalCount, selected, variant]);
 
   return { ...paginationRange, selectedCards };
