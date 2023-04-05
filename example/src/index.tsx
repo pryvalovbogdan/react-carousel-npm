@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Carousel } from 'react-carousel-cards-npm';
+import '../styles.css';
 
 const Card = (props: any) => {
   /** In props will be all values which are in cards array **/
@@ -17,7 +18,12 @@ const Card = (props: any) => {
         ...props.style,
       }}
     >
-      <img src={props.imageSrc} height={'240px'} style={{ borderRadius: '8px 8px 0 0', objectFit: 'cover' }} />
+      <img
+        src={props.imageSrc}
+        height={'240px'}
+        width={'100%'}
+        style={{ borderRadius: '8px 8px 0 0', objectFit: 'cover', width: props.width, maxWidth: props.maxWidth }}
+      />
       <div style={{ padding: '16px', fontSize: '18px', fontWeight: 700, borderRadius: '0 0 8px 8px' }}>
         {props.name}
       </div>
@@ -55,7 +61,7 @@ const cards = [
   },
   {
     id: '123xzda57db-4ea7-4258-8f34-74425bbc444422',
-    name: 'London is the capital and largest city of England and the United Kingdom, with a population of just under 9 million.',
+    name: 'London is the capital and largest city of England and the United Kingdom.',
     imageSrc:
       'https://media.istockphoto.com/id/1345970136/photo/elevated-dusk-view-to-the-illuminated-tower-bridge-and-skyline-of-london.jpg?b=1&s=170667a&w=0&k=20&c=7kFYQyQDyKz-97yZYzWRE6TcMFre4-LFGfGrVORwudw=',
   },
@@ -66,7 +72,7 @@ const cards = [
   },
   {
     id: '712389zxda57db-4ea7-4258-8f34-74425bbc444411',
-    name: 'Seoul, officially the Seoul Special Metropolitan City, is the capital and largest metropolis of the Republic of Korea.',
+    name: 'Seoul, officially the Seoul Special Metropolitan City, is the capital of the Republic of Korea.',
     imageSrc: 'https://c4.wallpaperflare.com/wallpaper/798/291/709/autumn-lake-park-building-wallpaper-preview.jpg',
   },
   {
@@ -81,10 +87,10 @@ root.render(
   <React.StrictMode>
     <div
       style={{
-        background: 'orange',
+        background: 'rgba(0, 0, 0, 0.03)',
         overflowX: 'hidden',
         padding: '30px 30px 20px',
-        height: '90vh',
+        height: 'calc(100% - 50px)',
       }}
     >
       <div
@@ -95,12 +101,15 @@ root.render(
       >
         <Carousel
           i18n='cards'
-          header={<h1>Carousel</h1>}
-          cardWidth={400}
+          header={<h1>Regular Carousel</h1>}
+          paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
+          cardWidth={445}
           marginCard={16}
+          // variant={'withSideCards'}
           cards={cards.map(card => ({ ...card, key: card.id }))}
           noCardsText={'No cards selected'}
-          variant={'withSideCards'}
+          // CustomArrowBtn={<CustomArrowBtn />}
+          // CustomPaginationBtn={<CustomPaginationBtn />}
         >
           <Card />
         </Carousel>
@@ -108,3 +117,18 @@ root.render(
     </div>
   </React.StrictMode>,
 );
+// <Carousel
+//             cards={liveMeetingsListWithKeys}
+//             cardWidth={445}
+//             paginationButtonStyles={{ cursor: 'pointer' }}
+//             i18n={'progressCarousel.header'}
+//             marginCard={16}
+//             variant={'withSideCards'}
+//             noCardsText={t('progressCarousel.noMeetingsInProgress')}
+//             header={
+//               <Flex alignItems='center' mb={!!liveMeetingsListWithKeys.length ? '10px' : 0}>
+//                 <Title3Bold text={t('progressCarousel.header')} mr='8px' />
+//                 {!!liveMeetingsListWithKeys.length && <Icon subType='CaretRightFilled24' />}
+//               </Flex>
+//             }
+//           >

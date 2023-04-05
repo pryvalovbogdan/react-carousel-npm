@@ -20,6 +20,39 @@ yarn add -D react-carousel-cards-npm
 
 ## Usage :
 
+First Create `Card` component which will be inside `Carousel`:
+
+```javascript
+    const Card = (props: any) => {
+        /** In props will be all values which are in cards array **/
+        console.log('props', props);
+    
+        return (
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    boxShadow: '0px 10px 15px 0px rgba(0,0,0,0.1)',
+                    borderRadius: '8px',
+                    /** Add wrapper to card and path to styles={props.style} for correct displaying **/
+                    ...props.style,
+                }}
+            >
+                <img
+                    src={props.imageSrc}
+                    height={'240px'}
+                    width={'100%'}
+                    /** Also add width and maxWidth for image if it's large **/
+                    style={{ borderRadius: '8px 8px 0 0', objectFit: 'cover', width: props.width, maxWidth: props.maxWidth }}
+                />
+                <div style={{ padding: '16px', fontSize: '18px', fontWeight: 700, borderRadius: '0 0 8px 8px' }}>
+                    {props.name}
+                </div>
+            </div>
+        );
+    };
+```
+
 Add `Carousel` to your component:
 
 ```js
@@ -27,52 +60,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { Carousel } from 'react-carousel-cards-npm'
 
-const Card = (props: any) => {
-	/** In props will be all values which are in cards array **/
-	console.log('props', props);
-
-	return (
-		/** Add wrapper to card and path to styles={props.style} for correct displaying **/
-		<div style={props.style}>
-			<div
-				style={{
-					backgroundColor: props.backgroundColor,
-					height: '300px',
-					borderRadius: '5px',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					color: 'white',
-					padding: '0 20px 0 0',
-				}}
-			>
-				{props.backgroundColor}
-			</div>
-		</div>
-	);
-};
-
-const CustomArrowBtn = (props: any) => {
-	const { isLeftArrow, ...rest } = props;
-
-	console.log('arrow props', props);
-
-	return <button {...rest}>{isLeftArrow ? '<' : '>'}</button>;
-};
-
-const CustomPaginationBtn = (props: any) => {
-	const { isActivePage, ...rest } = props;
-
-	console.log('pagination btn', props);
-
-	return (
-		<button {...rest} style={{ backgroundColor: isActivePage ? 'orange' : 'grey' }}>
-			click
-		</button>
-	);
-};
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+const cards = [
+	{
+		id: 'da57db-4ea7-4258-8f34-74425bbc444422',
+		name: 'Amsterdam is the capital and most populous city of the Netherlands.',
+		imageSrc: 'https://i.ytimg.com/vi/DHGNQUfcgEE/maxresdefault.jpg',
+	},
+];
 
 root.render(
 	<React.StrictMode>
@@ -87,30 +83,12 @@ root.render(
 		>
 			<Carousel
 				i18n='cards'
-				header={<h1>Carousel</h1>}
+				header={<h1>Regular Carousel</h1>}
                 /** Set your card width **/
 				cardWidth={300}
 				marginCard={5}
-                CustomPaginationBtn={<CustomPaginationBtn />}
-                CustomArrowBtn={<CustomArrowBtn />}
-				cards={[
-					{
-						backgroundColor: 'red',
-						key: '1-red',
-					},
-					{
-						backgroundColor: 'blue',
-						key: '1-blue',
-					},
-					{
-						backgroundColor: 'orange',
-						key: '1-orange',
-					},
-					{
-						backgroundColor: 'purple',
-						key: '1-purple',
-					},
-				]}
+                /** Add key for each card ID **/
+				cards={cards.map(item => ({...item, key: item.id}))}
 				noCardsText='No cards selected'
 			>
 				<Card />
@@ -119,6 +97,9 @@ root.render(
 	</React.StrictMode>,
 );
 ```
+
+<img src="https://photos.google.com/share/AF1QipPnu0TSad9JDzBavUJjgNe2LyBVrOpOiwRoUCEWcVotZwCwuAJhpBboOsvbZQ4o2A/photo/AF1QipOz9T6Ic3XzFI7alBFSKG7rvoMTeksHuTWc23dW?key=RkxNeUhqczctS21tRjV3MTlOYUh5SWdydjZOSzln" />
+
 
 [npm-url]: https://www.npmjs.com/package/react-carousel-cards-npm
 [npm-image]: https://img.shields.io/npm/v/react-carousel-cards-npm
