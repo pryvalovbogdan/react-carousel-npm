@@ -98,8 +98,7 @@ root.render(
 );
 ```
 
-<img src="https://photos.google.com/share/AF1QipPnu0TSad9JDzBavUJjgNe2LyBVrOpOiwRoUCEWcVotZwCwuAJhpBboOsvbZQ4o2A/photo/AF1QipOz9T6Ic3XzFI7alBFSKG7rvoMTeksHuTWc23dW?key=RkxNeUhqczctS21tRjV3MTlOYUh5SWdydjZOSzln" />
-
+![Regular Carousel](https://photos.google.com/share/AF1QipPnu0TSad9JDzBavUJjgNe2LyBVrOpOiwRoUCEWcVotZwCwuAJhpBboOsvbZQ4o2A/photo/AF1QipOz9T6Ic3XzFI7alBFSKG7rvoMTeksHuTWc23dW?key=RkxNeUhqczctS21tRjV3MTlOYUh5SWdydjZOSzln)
 
 [npm-url]: https://www.npmjs.com/package/react-carousel-cards-npm
 [npm-image]: https://img.shields.io/npm/v/react-carousel-cards-npm
