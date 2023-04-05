@@ -98,7 +98,7 @@ root.render(
 );
 ```
 
-![Regular Carousel](https://photos.google.com/share/AF1QipPnu0TSad9JDzBavUJjgNe2LyBVrOpOiwRoUCEWcVotZwCwuAJhpBboOsvbZQ4o2A/photo/AF1QipOz9T6Ic3XzFI7alBFSKG7rvoMTeksHuTWc23dW?key=RkxNeUhqczctS21tRjV3MTlOYUh5SWdydjZOSzln)
+![Regular Carousel](https://lh3.googleusercontent.com/pw/AMWts8AIK_2kXIwbYbNmuwnN-BWfjNN4WOj6_enx4VguL-BxYJX2cjnbHGiq6g9r885cj6ssJNSYK2G9kfVWg1BuiQppR7ARKxK0n0bAVvrulpZJ3igk3o1INucbip5N0vCBKT_d_3GLsiKyd_60dMGLhWYs=w1680-h536-s-no)
 
 [npm-url]: https://www.npmjs.com/package/react-carousel-cards-npm
 [npm-image]: https://img.shields.io/npm/v/react-carousel-cards-npm
