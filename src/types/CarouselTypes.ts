@@ -34,6 +34,7 @@ export interface UseCarouselReturnedValues {
 
 export interface UseResizeProps {
   ref: React.RefObject<any>;
+  refCard: React.RefObject<any>;
   setSelected: (prop: number) => void;
   cardWidth: number;
 }
@@ -41,6 +42,7 @@ export interface UseResizeProps {
 export interface UseResizeReturnedValues {
   width: number;
   setWidth: (width: number) => void;
+  widthCard: number;
 }
 
 export interface IHeaderArrows {

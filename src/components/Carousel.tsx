@@ -29,6 +29,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const [currentPage, onPageChange] = useState(defaultActivePage || 1);
 
   const ref = useRef<HTMLDivElement>(null!);
+  const refCard = useRef<HTMLDivElement>(null!);
 
   const { pageWithoutDots, totalPageCount, selectedCards } = useCarousel({
     selected,
@@ -37,7 +38,7 @@ const Carousel: React.FC<CarouselProps> = ({
     variant,
   });
 
-  const { width } = useResize({ ref, setSelected, cardWidth } as UseResizeProps);
+  const { width, widthCard } = useResize({ ref, setSelected, cardWidth, refCard } as UseResizeProps);
 
   const lastPage = pageWithoutDots && pageWithoutDots[pageWithoutDots.length - 1];
 
@@ -48,6 +49,10 @@ const Carousel: React.FC<CarouselProps> = ({
   if (totalPageCount < currentPage && totalPageCount > 0) {
     onPageChange(totalPageCount);
   }
+
+  const marginRight = width < 900 ? marginCard / 2 : marginCard * (selected - 1);
+
+  const marginLeft = width < 900 ? marginCard / 2 : marginCard;
 
   return (
     <div
@@ -86,66 +91,67 @@ const Carousel: React.FC<CarouselProps> = ({
         )}
       </div>
       <div className={stylesCss['carousel-container__body']} style={cardContainerStyles}>
-        {!cards.length ? (
-          <div className={stylesCss['no-cards-container']}>
-            <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-          </div>
-        ) : (
-          selectedCards.map((item, index) => {
-            if (variant === 'withSideCards') {
-              if (totalPageCount > 1 && selectedCards.length < 2) {
-                return (
-                  <div key='no-cards-container' className={stylesCss['no-cards-container']}>
-                    <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-                  </div>
-                );
-              }
+        <div ref={refCard} style={{ height: 0, width: '100%', maxWidth: cardWidth + 'px' }} />
+        <div style={{ gap: marginCard + 'px', display: 'flex', width: '100%', ...cardContainerStyles }}>
+          {!cards.length ? (
+            <div className={stylesCss['no-cards-container']}>
+              <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+            </div>
+          ) : (
+            selectedCards.map((item, index) => {
+              if (variant === 'withSideCards') {
+                if (totalPageCount > 1 && selectedCards.length < 2) {
+                  return (
+                    <div key='no-cards-container' className={stylesCss['no-cards-container']}>
+                      <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+                    </div>
+                  );
+                }
 
-              if (
-                (index === 0 && currentPage !== 1) ||
-                (selected < selectedCards.length && index === selectedCards.length - 1) ||
-                (index === selected - 1 && currentPage === 1)
-              ) {
-                return (
-                  <div
-                    className={stylesCss['side-card-box']}
-                    style={{ right: index === 0 ? 'auto' : 0 }}
-                    key={item.key}
-                  >
-                    {renderChildren(children, {
-                      ...item,
-                      ...styles.card,
-                      maxWidth: cardWidth,
-                      style: styles.sideCardParent,
-                    })}
-                    {renderChildren(children, {
-                      ...item,
-                      style: {
-                        ...styles.sideCardChild,
+                if (
+                  (index === 0 && currentPage !== 1) ||
+                  (selected < selectedCards.length && index === selectedCards.length - 1) ||
+                  (index === selected - 1 && currentPage === 1)
+                ) {
+                  return (
+                    <div
+                      className={stylesCss['side-card-box']}
+                      style={{ right: index === 0 ? 'auto' : 0 }}
+                      key={item.key}
+                    >
+                      {renderChildren(children, {
+                        ...item,
                         ...styles.card,
                         maxWidth: cardWidth,
-                        right:
-                          index === 0
-                            ? `calc(100% + ${marginCard}px`
-                            : `${width <= cardWidth ? '-95%' : width - selected * cardWidth - marginCard * 2 + 'px'}`,
-                      },
-                    })}
-                  </div>
-                );
+                        style: styles.sideCardParent,
+                      })}
+                      {renderChildren(children, {
+                        ...item,
+                        style: {
+                          ...styles.sideCardChild,
+                          ...styles.card,
+                          maxWidth: cardWidth,
+                          right:
+                            index === 0
+                              ? `calc(100% + ${marginLeft}px`
+                              : width - (selected - 1) * widthCard - widthCard - marginRight + 'px',
+                        },
+                      })}
+                    </div>
+                  );
+                }
               }
-            }
 
-            return renderChildren(children, {
-              ...item,
-              style: {
-                ...styles.card,
-                maxWidth: cardWidth,
-                marginLeft: (index === 0 && currentPage === 1) || (index === 1 && currentPage !== 1) ? 0 : marginCard,
-                marginRight: selectedCards.length > selected && index === selectedCards.length - 2 ? 0 : marginCard,
-              },
-            });
-          })
-        )}
+              return renderChildren(children, {
+                ...item,
+                style: {
+                  ...styles.card,
+                  maxWidth: cardWidth,
+                },
+              });
+            })
+          )}
+        </div>
       </div>
       {variant !== 'withoutPagination' && !!cards.length && totalPageCount > 1 && (
         <div className={stylesCss['carousel-container__pagination-box']}>
