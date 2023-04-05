@@ -5,7 +5,8 @@ import { useCarousel } from '../hooks/useCarusel';
 import { useResize } from '../hooks/useResize';
 import { renderChild, renderChildren } from '../utils';
 import stylesCss from '../styles/carousel.module.css';
-import HeaderArrows from './HeaderArrows';
+import SideCard from './SideCard';
+import CustomArrowsWrapper from './CustomArrowsWrapper';
 
 const Carousel: React.FC<CarouselProps> = ({
   i18n,
@@ -14,7 +15,7 @@ const Carousel: React.FC<CarouselProps> = ({
   variant = 'regular',
   disabled,
   cards = [],
-  cardWidth = 350,
+  cardWidth = 300,
   cardContainerStyles,
   carouselContainerStyles,
   paginationButtonStyles,
@@ -26,28 +27,28 @@ const Carousel: React.FC<CarouselProps> = ({
   CustomPaginationBtn,
 }) => {
   const [selected, setSelected] = useState(defaultCardsCount || 3);
-  const [currentPage, onPageChange] = useState(defaultActivePage || 1);
+  const [currentPage, onCurrentPage] = useState(defaultActivePage || 1);
 
   const ref = useRef<HTMLDivElement>(null!);
+  const refCard = useRef<HTMLDivElement>(null!);
 
-  const { pageWithoutDots, totalPageCount, selectedCards } = useCarousel({
+  const { rangeBottomPagination, totalPageCount, selectedCards } = useCarousel({
     selected,
     cards,
     currentPage,
     variant,
   });
 
-  const { width } = useResize({ ref, setSelected, cardWidth } as UseResizeProps);
+  const { width, widthCard } = useResize({ ref, setSelected, cardWidth, refCard } as UseResizeProps);
 
-  const lastPage = pageWithoutDots && pageWithoutDots[pageWithoutDots.length - 1];
-
-  const goToNextPage = () => onPageChange(currentPage + 1);
-
-  const goToPrevPage = () => onPageChange(currentPage - 1);
+  const lastPage = rangeBottomPagination && rangeBottomPagination[rangeBottomPagination.length - 1];
 
   if (totalPageCount < currentPage && totalPageCount > 0) {
-    onPageChange(totalPageCount);
+    onCurrentPage(totalPageCount);
   }
+
+  const handleNextPage = () => onCurrentPage(currentPage + 1);
+  const handlePrevPage = () => onCurrentPage(currentPage - 1);
 
   return (
     <div
@@ -58,101 +59,73 @@ const Carousel: React.FC<CarouselProps> = ({
     >
       <div className={stylesCss['carousel-container__header']}>
         {header}
-        {variant !== 'withoutArrows' && !!cards.length && totalPageCount > 1 && (
-          <div>
-            {CustomArrowBtn ? (
-              <>
-                {renderChild(CustomArrowBtn, {
-                  disabled: disabled || currentPage === 1,
-                  onClick: goToPrevPage,
-                  isLeftArrow: true,
-                })}
-                {renderChild(CustomArrowBtn, {
-                  disabled: disabled || currentPage === lastPage,
-                  onClick: goToNextPage,
-                  isLeftArrow: false,
-                })}
-              </>
-            ) : (
-              <HeaderArrows
-                disabled={disabled}
-                lastPage={lastPage}
-                currentPage={currentPage}
-                goToNextPage={goToNextPage}
-                goToPrevPage={goToPrevPage}
-              />
-            )}
-          </div>
+        {variant !== 'withoutArrows' && totalPageCount > 1 && (
+          <CustomArrowsWrapper
+            CustomArrowBtn={CustomArrowBtn}
+            currentPage={currentPage}
+            lastPage={lastPage}
+            disabled={disabled}
+            handleNextPage={handleNextPage}
+            handlePrevPage={handlePrevPage}
+          />
         )}
       </div>
       <div className={stylesCss['carousel-container__body']} style={cardContainerStyles}>
-        {!cards.length ? (
-          <div className={stylesCss['no-cards-container']}>
-            <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-          </div>
-        ) : (
-          selectedCards.map((item, index) => {
-            if (variant === 'withSideCards') {
-              if (totalPageCount > 1 && selectedCards.length < 2) {
-                return (
-                  <div key='no-cards-container' className={stylesCss['no-cards-container']}>
-                    <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-                  </div>
-                );
+        <div ref={refCard} style={{ height: 0, width: '100%', maxWidth: cardWidth + 'px' }} />
+        <div style={{ gap: marginCard + 'px', display: 'flex', width: '100%', ...cardContainerStyles }}>
+          {!cards.length ? (
+            <div className={stylesCss['no-cards-container']}>
+              <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+            </div>
+          ) : (
+            selectedCards.map((item, index) => {
+              if (variant === 'withSideCards') {
+                if (totalPageCount > 1 && selectedCards.length < 2) {
+                  return (
+                    <div key='no-cards-container' className={stylesCss['no-cards-container']}>
+                      <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+                    </div>
+                  );
+                }
+
+                if (
+                  (index === 0 && currentPage !== 1) ||
+                  (selected < selectedCards.length && index === selectedCards.length - 1) ||
+                  (index === selected - 1 && currentPage === 1)
+                ) {
+                  return (
+                    <SideCard
+                      index={index}
+                      item={item}
+                      width={width}
+                      key={item.key}
+                      selected={selected}
+                      cardWidth={cardWidth}
+                      widthCard={widthCard}
+                      marginCard={marginCard}
+                      child={children}
+                    />
+                  );
+                }
               }
 
-              if (
-                (index === 0 && currentPage !== 1) ||
-                (selected < selectedCards.length && index === selectedCards.length - 1) ||
-                (index === selected - 1 && currentPage === 1)
-              ) {
-                return (
-                  <div
-                    className={stylesCss['side-card-box']}
-                    style={{ right: index === 0 ? 'auto' : 0 }}
-                    key={item.key}
-                  >
-                    {renderChildren(children, {
-                      ...item,
-                      ...styles.card,
-                      maxWidth: cardWidth,
-                      style: styles.sideCardParent,
-                    })}
-                    {renderChildren(children, {
-                      ...item,
-                      style: {
-                        ...styles.sideCardChild,
-                        ...styles.card,
-                        maxWidth: cardWidth,
-                        right:
-                          index === 0
-                            ? `calc(100% + ${marginCard}px`
-                            : `${width <= cardWidth ? '-95%' : width - selected * cardWidth - marginCard * 2 + 'px'}`,
-                      },
-                    })}
-                  </div>
-                );
-              }
-            }
-
-            return renderChildren(children, {
-              ...item,
-              style: {
-                ...styles.card,
-                maxWidth: cardWidth,
-                marginLeft: (index === 0 && currentPage === 1) || (index === 1 && currentPage !== 1) ? 0 : marginCard,
-                marginRight: selectedCards.length > selected && index === selectedCards.length - 2 ? 0 : marginCard,
-              },
-            });
-          })
-        )}
+              return renderChildren(children, {
+                ...item,
+                style: {
+                  ...styles.card,
+                  maxWidth: cardWidth,
+                },
+              });
+            })
+          )}
+        </div>
       </div>
-      {variant !== 'withoutPagination' && !!cards.length && totalPageCount > 1 && (
+      {variant !== 'withoutPagination' && totalPageCount > 1 && (
         <div className={stylesCss['carousel-container__pagination-box']}>
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return CustomPaginationBtn ? (
               renderChild(CustomPaginationBtn, {
-                onClick: () => onPageChange(index + 1),
+                onClick: handleNextPage,
                 key: `${item.key}-button`,
                 disabled: disabled,
                 isActivePage: currentPage === index + 1,
@@ -162,7 +135,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 className={stylesCss['pagination-button']}
                 disabled={disabled}
                 key={`${item.key}-button`}
-                onClick={() => onPageChange(index + 1)}
+                onClick={handleNextPage}
                 style={{
                   ...paginationButtonStyles,
                   cursor: disabled ? 'not-allowed' : 'pointer',
@@ -183,15 +156,5 @@ export default Carousel;
 const styles = {
   card: {
     width: '100%',
-  },
-  sideCardParent: {
-    width: '30%',
-    height: '0',
-    overflow: 'hidden',
-    border: 'none',
-  },
-  sideCardChild: {
-    position: 'absolute',
-    top: 0,
   },
 };

@@ -44,7 +44,7 @@ describe('useCarousel', () => {
   it('should return the correct pagination range', () => {
     const { result } = renderHook(() => useCarousel(props));
     const totalPageCount = result.current.totalPageCount;
-    const pageWithoutDots = result.current.pageWithoutDots;
+    const pageWithoutDots = result.current.rangeBottomPagination;
 
     expect(totalPageCount).toBe(5);
     expect(pageWithoutDots).toHaveLength(5);

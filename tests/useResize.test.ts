@@ -4,12 +4,16 @@ import { useResize } from '../src/hooks/useResize';
 describe('useResize', () => {
   it('should update the selected value when the width changes', () => {
     const ref = { current: { offsetWidth: 1000 } };
+    const refCard = { current: { offsetWidth: 0 } };
     const setSelected = jest.fn();
     const cardWidth = 200;
 
-    const { rerender } = renderHook(({ ref, setSelected, cardWidth }) => useResize({ ref, setSelected, cardWidth }), {
-      initialProps: { ref, setSelected, cardWidth },
-    });
+    const { rerender } = renderHook(
+      ({ ref, setSelected, cardWidth }) => useResize({ ref, setSelected, cardWidth, refCard }),
+      {
+        initialProps: { ref, setSelected, cardWidth },
+      },
+    );
 
     expect(setSelected).toHaveBeenCalledWith(5);
 
@@ -22,10 +26,11 @@ describe('useResize', () => {
 
   it('should not update the selected value when the width is zero', () => {
     const ref = { current: { offsetWidth: 0 } };
+    const refCard = { current: { offsetWidth: 0 } };
     const setSelected = jest.fn();
     const cardWidth = 200;
 
-    renderHook(() => useResize({ ref, setSelected, cardWidth }));
+    renderHook(() => useResize({ ref, setSelected, cardWidth, refCard }));
 
     expect(setSelected).not.toHaveBeenCalled();
   });

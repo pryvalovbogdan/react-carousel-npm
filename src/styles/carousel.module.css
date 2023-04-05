@@ -17,6 +17,7 @@
 .carousel-container__body {
   display: flex;
   justify-content: start;
+  flex-direction: column;
   width: 100%;
 }
 
