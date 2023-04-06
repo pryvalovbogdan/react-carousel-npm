@@ -18,7 +18,7 @@ or
 yarn add -D react-carousel-cards-npm
 ```
 
-![With SIde Cards Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/WithSIdeCards.gif)
+![With SIde Cards Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/WithSIdeCards.gif)
 
 ## Usage:
 
@@ -111,7 +111,7 @@ root.render(
 ```
 ***
 
-![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/RegularCarousel.gif)
+![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/RegularCarousel.gif)
 
 ### Regular `Carousel` component:
 
@@ -131,7 +131,7 @@ root.render(
 ```
 
 
-![Custom Arrows and Pagination](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/CustomArrows.gif)
+![Custom Arrows and Pagination](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/CustomArrows.gif)
 
 ### Custom `CustomArrowBtn` if you want to add your own arrows:
 
@@ -182,7 +182,7 @@ Add `CustomArrowBtn` or ` to your `Carousel`:
 </Carousel>
 ```
 
-![No Cards Block](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/NoCards.png)
+![No Cards Block](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/NoCards.png)
 
 ### No cards Block of `Carousel`:
 
