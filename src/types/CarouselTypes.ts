@@ -1,10 +1,12 @@
 import React from 'react';
 
+type VariantType = 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
+
 export interface CarouselProps {
   i18n: string;
   cards: any[];
   header?: React.ReactNode;
-  variant?: 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
+  variant?: VariantType;
   children: React.ReactNode;
   cardWidth?: number;
   disabled?: boolean;
@@ -23,7 +25,7 @@ export interface UseCarouselProps {
   selected?: number | any;
   cards: any[];
   currentPage: number;
-  variant?: string;
+  variant?: VariantType;
 }
 
 export interface UseCarouselReturnedValues {
@@ -37,6 +39,7 @@ export interface UseResizeProps {
   refCard: React.RefObject<any>;
   setSelected: (prop: number) => void;
   cardWidth: number;
+  variant: VariantType;
 }
 
 export interface UseResizeReturnedValues {
