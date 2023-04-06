@@ -1,7 +1,13 @@
 import { UseResizeProps, UseResizeReturnedValues } from '../types/CarouselTypes';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
-export const useResize = ({ ref, setSelected, cardWidth, refCard }: UseResizeProps): UseResizeReturnedValues => {
+export const useResize = ({
+  ref,
+  setSelected,
+  cardWidth,
+  refCard,
+  variant,
+}: UseResizeProps): UseResizeReturnedValues => {
   const [width, setWidth] = useState(0);
   const [widthCard, setWidthCard] = useState(cardWidth);
 
@@ -9,7 +15,9 @@ export const useResize = ({ ref, setSelected, cardWidth, refCard }: UseResizePro
     if (width) {
       const selected = Math.ceil(width / cardWidth);
 
-      setSelected(selected > 1 ? selected : 2);
+      const selectedCount = variant === 'regular' ? 1 : 2;
+
+      setSelected(selected > 1 ? selected : selectedCount);
     }
   }, [width, cardWidth, setSelected]);
 

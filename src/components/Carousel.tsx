@@ -26,8 +26,13 @@ const Carousel: React.FC<CarouselProps> = ({
   CustomArrowBtn,
   CustomPaginationBtn,
 }) => {
-  const [selected, setSelected] = useState(defaultCardsCount || 3);
-  const [currentPage, onCurrentPage] = useState(defaultActivePage || 1);
+  const [selected, setSelected] = useState<number>(defaultCardsCount || 3);
+  const [currentPage, onCurrentPage] = useState<number>(defaultActivePage || 1);
+  const [touchStart, setTouchStart] = useState<number>(0);
+  const [touchEnd, setTouchEnd] = useState<number>(0);
+
+  const handleNextPage = () => onCurrentPage(currentPage + 1);
+  const handlePrevPage = () => onCurrentPage(currentPage - 1);
 
   const ref = useRef<HTMLDivElement>(null!);
   const refCard = useRef<HTMLDivElement>(null!);
@@ -39,7 +44,7 @@ const Carousel: React.FC<CarouselProps> = ({
     variant,
   });
 
-  const { width, widthCard } = useResize({ ref, setSelected, cardWidth, refCard } as UseResizeProps);
+  const { width, widthCard } = useResize({ ref, setSelected, cardWidth, refCard, variant } as UseResizeProps);
 
   const lastPage = rangeBottomPagination && rangeBottomPagination[rangeBottomPagination.length - 1];
 
@@ -47,8 +52,24 @@ const Carousel: React.FC<CarouselProps> = ({
     onCurrentPage(totalPageCount);
   }
 
-  const handleNextPage = () => onCurrentPage(currentPage + 1);
-  const handlePrevPage = () => onCurrentPage(currentPage - 1);
+  const handleTouchStart = e => setTouchStart(e.targetTouches[0].clientX);
+  const handleTouchMove = e => setTouchEnd(e.targetTouches[0].clientX);
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 10) {
+      /** Swipe Right **/
+      if (currentPage < lastPage) {
+        onCurrentPage(currentPage + 1);
+      }
+    }
+
+    if (touchStart - touchEnd < -10) {
+      /** Swipe Left **/
+      if (currentPage > 1) {
+        onCurrentPage(currentPage - 1);
+      }
+    }
+  };
 
   return (
     <div
@@ -70,7 +91,13 @@ const Carousel: React.FC<CarouselProps> = ({
           />
         )}
       </div>
-      <div className={stylesCss['carousel-container__body']} style={cardContainerStyles}>
+      <div
+        className={stylesCss['carousel-container__body']}
+        style={cardContainerStyles}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={() => handleTouchEnd()}
+      >
         <div ref={refCard} style={{ height: 0, width: '100%', maxWidth: cardWidth + 'px' }} />
         <div style={{ gap: marginCard + 'px', display: 'flex', width: '100%', ...cardContainerStyles }}>
           {!cards.length ? (
