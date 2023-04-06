@@ -20,7 +20,7 @@ yarn add -D react-carousel-cards-npm
 
 ![With SIde Cards Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/WithSIdeCards.gif)
 
-## Usage :
+## Usage:
 
 First Create `Card` component which will be inside `Carousel`:
 
@@ -113,7 +113,7 @@ root.render(
 
 ![Regular Carousel](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/RegularCarousel.gif)
 
-Regular `Carousel` component:
+### Regular `Carousel` component:
 
 ```javascript
 <Carousel
@@ -133,7 +133,7 @@ Regular `Carousel` component:
 
 ![Custom Arrows and Pagination](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/CustomArrows.gif)
 
-Custom `CustomArrowBtn` if you want to add your own arrows:
+### Custom `CustomArrowBtn` if you want to add your own arrows:
 
 Create custom button:
 
@@ -184,7 +184,7 @@ Add `CustomArrowBtn` or ` to your `Carousel`:
 
 ![No Cards Block](https://github.com/pryvalovbogdan/react-carousel-npm/blob/update-readme-with-all-cases/public/NoCards.png)
 
-No cards Block of `Carousel`:
+### No cards Block of `Carousel`:
 
 ```javascript
 <Carousel
@@ -201,8 +201,29 @@ No cards Block of `Carousel`:
 </Carousel>
 ```
 
+### Props `Carousel`:
 
+| Name                    | Type                                   | Description                                       |
+|:------------------------|----------------------------------------|:--------------------------------------------------|
+| header                  | `React.ReactNode`                      | Header of Carosel where you can                   |
+| cards                   | `any[]`                                | Cards array which will be shown inside `Carousel` |
+| disabled                | `boolean`                              | To disable arrows                                 |
+| variant                 | `regular`<br/> `withSideCards` <br/> `withoutArrows`  <br/> `withoutPagination` | Variants for shoing `Carousel`.                   |
+| cardWidth               | `number`                               | Each card max width `Default = 300 px`            |
+| marginCard              | `number`                               | Margin between 2 cards                            |
+| noCardsText             | `string`                               | No cards text inside block.                       |
+| CustomArrowBtn          | `React.ReactNode`                      | Custom arrows for `Carousel`                      |
+| CustomPaginationBtn     | `React.ReactNode`                      | Custom Pagination for `Carousel`                  |
+| children                | `React.ReactNode`                      | Cards inside `Carousel`                           |
+| defaultCardsCount       | `number`                               | How many cards will be shown on page by default   |
+| defaultActivePage       | `number`                               | Which page will be active by default              |
+| cardContainerStyles     | `React.CSSProperties`                  | Styles for cards container                        |
+| carouselContainerStyles | `React.CSSProperties`                  | Styles for carousel container                     |
+| paginationButtonStyles  | `React.CSSProperties`                  | Styles for pagination button                      |
 
+## If you want to support
+
+Give a ⭐️ to project if you like it!
 
 [npm-url]: https://www.npmjs.com/package/react-carousel-cards-npm
 [npm-image]: https://img.shields.io/npm/v/react-carousel-cards-npm
