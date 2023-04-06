@@ -33,8 +33,8 @@ const Card = (props: any) => {
 
 const CustomArrowBtn = (props: any) => {
   const { isLeftArrow, ...rest } = props;
-
-  console.log('arrow props', props);
+  /** In props will be which arrow left/right = isLeftArrow **/
+  console.log('Arrow props', props);
 
   return <button {...rest}>{isLeftArrow ? '<' : '>'}</button>;
 };
@@ -105,11 +105,11 @@ root.render(
           paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
           cardWidth={445}
           marginCard={16}
-          // variant={'withSideCards'}
+          variant='withSideCards'
           cards={cards.map(card => ({ ...card, key: card.id }))}
-          noCardsText={'No cards selected'}
-          // CustomArrowBtn={<CustomArrowBtn />}
-          // CustomPaginationBtn={<CustomPaginationBtn />}
+          noCardsText='No cards selected'
+          CustomArrowBtn={<CustomArrowBtn />}
+          CustomPaginationBtn={<CustomPaginationBtn />}
         >
           <Card />
         </Carousel>
