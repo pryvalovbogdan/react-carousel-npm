@@ -2,21 +2,21 @@ import React from 'react';
 
 export interface CarouselProps {
   i18n: string;
-  defaultCardsCount?: number;
-  defaultActivePage?: number;
-  variant?: 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
-  disabled?: boolean;
   cards: any[];
+  header?: React.ReactNode;
+  variant?: 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
   children: React.ReactNode;
   cardWidth?: number;
+  disabled?: boolean;
+  marginCard?: number;
+  noCardsText?: string;
+  CustomArrowBtn?: React.ReactNode;
+  CustomPaginationBtn?: React.ReactNode;
+  defaultCardsCount?: number;
+  defaultActivePage?: number;
   cardContainerStyles?: React.CSSProperties;
   carouselContainerStyles?: React.CSSProperties;
   paginationButtonStyles?: React.CSSProperties;
-  marginCard?: number;
-  noCardsText?: string;
-  header?: React.ReactNode;
-  CustomArrowBtn?: React.ReactNode;
-  CustomPaginationBtn?: React.ReactNode;
 }
 
 export interface UseCarouselProps {
