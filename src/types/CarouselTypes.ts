@@ -19,6 +19,7 @@ export interface CarouselProps {
   cardContainerStyles?: React.CSSProperties;
   carouselContainerStyles?: React.CSSProperties;
   paginationButtonStyles?: React.CSSProperties;
+  CustomNoCardsBlock?: React.ReactNode;
 }
 
 export interface UseCarouselProps {

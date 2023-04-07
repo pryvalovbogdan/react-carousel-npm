@@ -25,6 +25,7 @@ const Carousel: React.FC<CarouselProps> = ({
   children,
   CustomArrowBtn,
   CustomPaginationBtn,
+  CustomNoCardsBlock,
 }) => {
   const [selected, setSelected] = useState<number>(defaultCardsCount || 3);
   const [currentPage, onCurrentPage] = useState<number>(defaultActivePage || 1);
@@ -101,9 +102,17 @@ const Carousel: React.FC<CarouselProps> = ({
         <div ref={refCard} style={{ height: 0, width: '100%', maxWidth: cardWidth + 'px' }} />
         <div style={{ gap: marginCard + 'px', display: 'flex', width: '100%', ...cardContainerStyles }}>
           {!cards.length ? (
-            <div className={stylesCss['no-cards-container']}>
-              <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-            </div>
+            <>
+              {CustomNoCardsBlock ? (
+                renderChild(CustomNoCardsBlock, {
+                  noCardsText,
+                })
+              ) : (
+                <div className={stylesCss['no-cards-container']}>
+                  <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
+                </div>
+              )}
+            </>
           ) : (
             selectedCards.map((item, index) => {
               if (variant === 'withSideCards') {
