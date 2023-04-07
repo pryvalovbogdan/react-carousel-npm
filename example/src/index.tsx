@@ -51,6 +51,28 @@ const CustomPaginationBtn = (props: any) => {
   );
 };
 
+const CustomNoCardsBlock = (props: any) => {
+  /** In props will be noCardsText **/
+  console.log('No cards props', props);
+
+  return (
+    <div
+      style={{
+        width: '100%',
+        height: '100px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        border: '1px solid gray',
+        borderRadius: '8px',
+        backgroundColor: 'lightcyan',
+      }}
+    >
+      {props.noCardsText}
+    </div>
+  );
+};
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 const cards = [
@@ -110,6 +132,7 @@ root.render(
           noCardsText='No cards selected'
           CustomArrowBtn={<CustomArrowBtn />}
           CustomPaginationBtn={<CustomPaginationBtn />}
+          CustomNoCardsBlock={<CustomNoCardsBlock />}
         >
           <Card />
         </Carousel>
@@ -117,18 +140,3 @@ root.render(
     </div>
   </React.StrictMode>,
 );
-// <Carousel
-//             cards={liveMeetingsListWithKeys}
-//             cardWidth={445}
-//             paginationButtonStyles={{ cursor: 'pointer' }}
-//             i18n={'progressCarousel.header'}
-//             marginCard={16}
-//             variant={'withSideCards'}
-//             noCardsText={t('progressCarousel.noMeetingsInProgress')}
-//             header={
-//               <Flex alignItems='center' mb={!!liveMeetingsListWithKeys.length ? '10px' : 0}>
-//                 <Title3Bold text={t('progressCarousel.header')} mr='8px' />
-//                 {!!liveMeetingsListWithKeys.length && <Icon subType='CaretRightFilled24' />}
-//               </Flex>
-//             }
-//           >
