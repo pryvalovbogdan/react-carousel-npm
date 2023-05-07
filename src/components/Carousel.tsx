@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { CarouselProps, UseResizeProps } from '../types/CarouselTypes';
 import { useCarousel } from '../hooks/useCarusel';
@@ -32,8 +32,8 @@ const Carousel: React.FC<CarouselProps> = ({
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
 
-  const handleNextPage = () => onCurrentPage(currentPage + 1);
-  const handlePrevPage = () => onCurrentPage(currentPage - 1);
+  const handleNextPage = () => onCurrentPage(prevState => prevState + 1);
+  const handlePrevPage = () => onCurrentPage(prevState => (prevState < 2 ? 1 : prevState - 1));
 
   const ref = useRef<HTMLDivElement>(null!);
   const refCard = useRef<HTMLDivElement>(null!);
@@ -60,17 +60,34 @@ const Carousel: React.FC<CarouselProps> = ({
     if (touchStart - touchEnd > 10) {
       /** Swipe Right **/
       if (currentPage < lastPage) {
-        onCurrentPage(currentPage + 1);
+        handleNextPage();
       }
     }
 
     if (touchStart - touchEnd < -10) {
       /** Swipe Left **/
       if (currentPage > 1) {
-        onCurrentPage(currentPage - 1);
+        handlePrevPage();
       }
     }
   };
+
+  const keyDownHandle = (e: KeyboardEvent) => {
+    /** Key arrow Right **/
+    if (e.key === 'ArrowRight') {
+      handleNextPage();
+    }
+    /** Key arrow Left **/
+    if (e.key === 'ArrowLeft') {
+      handlePrevPage();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', keyDownHandle);
+
+    return () => window.removeEventListener('keydown', keyDownHandle);
+  }, []);
 
   return (
     <div

@@ -96,8 +96,8 @@ root.render(
           i18n='cards'
           header={<h1>With Side Cards Carousel</h1>}
           /** Set your card width **/
-          cardWidth={300}
-          marginCard={5}
+          cardWidth={445}
+          marginCard={16}
           variant='withSideCards'
           /** Add key for each card ID **/
           cards={cards.map(item => ({...item, key: item.id}))}
@@ -120,8 +120,8 @@ root.render(
   i18n='cards'
   header={<h1>Regular Carousel</h1>}
   /** Set your card width **/
-  cardWidth={300}
-  marginCard={5}
+  cardWidth={445}
+  marginCard={16}
   /** Add key for each card ID **/
   cards={cards.map(item => ({ ...item, key: item.id }))}
   noCardsText='No cards selected'

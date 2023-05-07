@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useCarousel } from '../src/hooks/useCarusel';
+import { VariantType } from '../src/types/CarouselTypes';
 
 describe('useCarousel', () => {
   const cards = [
@@ -18,7 +19,7 @@ describe('useCarousel', () => {
     selected: 3,
     cards,
     currentPage: 1,
-    variant: 'withSideCards',
+    variant: 'withSideCards' as const satisfies VariantType,
   };
 
   it('should return the correct selected cards for the first page', () => {
