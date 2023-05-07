@@ -1,6 +1,6 @@
 import React from 'react';
 
-type VariantType = 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
+export type VariantType = 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
 
 export interface CarouselProps {
   i18n: string;
