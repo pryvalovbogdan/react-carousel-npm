@@ -76,3 +76,12 @@ export interface ICustomArrowsWrapper {
   handlePrevPage: () => void;
   handleNextPage: () => void;
 }
+
+export interface ICarouselContext {
+  currentPage: number;
+  handleNextPage: () => void;
+  handlePrevPage: () => void;
+  onCurrentPage: (page: number) => void;
+  totalPageCount: number;
+  onTotalPageCountChange: (page: number) => void;
+}
