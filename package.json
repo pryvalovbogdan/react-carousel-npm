@@ -6,7 +6,7 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "scripts": {
-    "test": "jest --config jestconfig.json",
+    "test": "jest --config jestconfig.json --coverage",
     "prepublish": "rm -rf ./dist && npm run build",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
     "build": "yarn build:esm && yarn copy-styles:esm && yarn build:cjs && yarn copy-styles:cjs",

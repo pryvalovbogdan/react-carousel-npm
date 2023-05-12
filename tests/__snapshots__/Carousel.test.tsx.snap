@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Carousel test render snapshot Notes 1`] = `
+<body>
+  <div>
+    <div
+      class="carousel-container"
+      data-testid="carousel-Cards"
+    >
+      <div
+        class="carousel-container__header"
+      >
+        <div>
+          <button
+            class="button"
+            color="neutral"
+            disabled=""
+          >
+            <a
+              class="icon icon__previous"
+            />
+          </button>
+          <button
+            class="button"
+            color="neutral"
+          >
+            <a
+              class="icon icon__next"
+            />
+          </button>
+        </div>
+      </div>
+      <div
+        class="carousel-container__body"
+      >
+        <div
+          style="height: 0px; width: 100%; max-width: 300px;"
+        />
+        <div
+          style="gap: 1px; display: flex; width: 100%;"
+        >
+          <div>
+            Card 1
+          </div>
+        </div>
+      </div>
+      <div
+        class="carousel-container__pagination-box"
+      >
+        <button
+          class="pagination-button"
+          data-testid="pagination-Button1"
+          style="cursor: pointer; background-color: rgba(66, 66, 66, 0.8);"
+        />
+        <button
+          class="pagination-button"
+          data-testid="pagination-Button2"
+          style="cursor: pointer; background-color: rgba(0, 0, 0, 0.1);"
+        />
+        <button
+          class="pagination-button"
+          data-testid="pagination-Button3"
+          style="cursor: pointer; background-color: rgba(0, 0, 0, 0.1);"
+        />
+      </div>
+    </div>
+  </div>
+</body>
+`;
