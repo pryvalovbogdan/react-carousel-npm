@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, Context } from 'react';
 
 import { ICarouselContext } from '../types/CarouselTypes';
+import { setNextPage, setPrevPage } from '../utils';
 
 const defaultContext: ICarouselContext = {
-  currentPage: 1,
   totalPageCount: 1,
   handleNextPage: () => {},
   handlePrevPage: () => {},
@@ -16,8 +16,8 @@ export const CarouselContextProvider = ({ children }: { children: React.ReactNod
   const [currentPage, onCurrentPage] = useState<number>(1);
   const [totalPageCount, onTotalPageCountChange] = useState<number>(1);
 
-  const handleNextPage = () => onCurrentPage(prevState => prevState + 1);
-  const handlePrevPage = () => onCurrentPage(prevState => (prevState < 2 ? 1 : prevState - 1));
+  const handleNextPage = setNextPage(onCurrentPage);
+  const handlePrevPage = setPrevPage(onCurrentPage);
 
   return (
     <CarouselContext.Provider

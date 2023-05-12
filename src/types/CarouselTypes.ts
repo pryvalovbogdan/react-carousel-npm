@@ -78,7 +78,7 @@ export interface ICustomArrowsWrapper {
 }
 
 export interface ICarouselContext {
-  currentPage: number;
+  currentPage?: number;
   handleNextPage: () => void;
   handlePrevPage: () => void;
   onCurrentPage: (page: number) => void;

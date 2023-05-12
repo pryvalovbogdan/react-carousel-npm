@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CarouselProps, UseResizeProps } from '../types/CarouselTypes';
 import { useCarousel } from '../hooks/useCarusel';
 import { useResize } from '../hooks/useResize';
-import { renderChild, renderChildren } from '../utils';
+import { renderChild, renderChildren, setNextPage, setPrevPage } from '../utils';
 import stylesCss from '../styles/carousel.module.css';
 import SideCard from './SideCard';
 import CustomArrowsWrapper from './CustomArrowsWrapper';
@@ -31,13 +31,32 @@ const Carousel: React.FC<CarouselProps> = ({
   const [selected, setSelected] = useState<number>(defaultCardsCount || 3);
   const [touchStart, setTouchStart] = useState<number>(0);
   const [touchEnd, setTouchEnd] = useState<number>(0);
-
-  const { currentPage, onCurrentPage, handlePrevPage, handleNextPage, onTotalPageCountChange } = useCarouselContext();
+  const [currentPageLocal, setCurrentPageLocal] = useState<number>(1);
 
   const ref = useRef<HTMLDivElement>(null!);
   const refCard = useRef<HTMLDivElement>(null!);
 
-  const { rangeBottomPagination, totalPageCount, selectedCards } = useCarousel({
+  const {
+    currentPage: contextCurrentPage,
+    onCurrentPage: contextOnCurrentPage,
+    handlePrevPage: contextHandlePrevPage,
+    handleNextPage: contextHandleNextPage,
+    onTotalPageCountChange,
+  } = useCarouselContext();
+
+  let currentPage = contextCurrentPage || 1;
+  let handleNextPage = contextHandleNextPage;
+  let onCurrentPage = contextOnCurrentPage;
+  let handlePrevPage = contextHandlePrevPage;
+
+  if (!contextCurrentPage) {
+    currentPage = currentPageLocal;
+    handleNextPage = setNextPage(setCurrentPageLocal);
+    onCurrentPage = setCurrentPageLocal;
+    handlePrevPage = setPrevPage(setCurrentPageLocal);
+  }
+
+  const { totalPageCount, selectedCards } = useCarousel({
     selected,
     cards,
     currentPage,
@@ -68,7 +87,9 @@ const Carousel: React.FC<CarouselProps> = ({
   const keyDownHandle = (e: KeyboardEvent) => {
     /** Key arrow Right **/
     if (e.key === 'ArrowRight') {
-      handleNextPage();
+      if (currentPage < totalPageCount) {
+        handleNextPage();
+      }
     }
     /** Key arrow Left **/
     if (e.key === 'ArrowLeft') {
@@ -80,23 +101,17 @@ const Carousel: React.FC<CarouselProps> = ({
     if (defaultActivePage) {
       onCurrentPage(defaultActivePage);
     }
-  }, [defaultActivePage]);
+  }, [defaultActivePage, onCurrentPage]);
 
   useEffect(() => {
     onTotalPageCountChange(totalPageCount);
   }, [totalPageCount, onTotalPageCountChange]);
 
   useEffect(() => {
-    if (totalPageCount < currentPage && totalPageCount > 0) {
-      onCurrentPage(totalPageCount);
-    }
-  }, [totalPageCount, currentPage, onCurrentPage]);
-
-  useEffect(() => {
     window.addEventListener('keydown', keyDownHandle);
 
     return () => window.removeEventListener('keydown', keyDownHandle);
-  }, []);
+  }, [keyDownHandle]);
 
   return (
     <div

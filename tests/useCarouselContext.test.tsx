@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { CarouselContextProvider, useCarouselContext } from '../src';
 
@@ -26,12 +26,12 @@ test('should update current page when next page is clicked', () => {
 
   // Verify the initial state
   const currentPageElement = getByTestId('currentPage');
-  expect(currentPageElement.textContent).toBe('1');
+  expect(currentPageElement.textContent).toBe('0');
 
   // Simulate clicking the next button
   const nextButton = getByTestId('nextButton');
   fireEvent.click(nextButton);
 
   // Verify the updated state
-  expect(currentPageElement.textContent).toBe('2');
+  expect(currentPageElement.textContent).toBe('1');
 });

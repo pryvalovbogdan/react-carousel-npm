@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import React from 'react';
+import * as React from 'react';
 import CustomArrowsWrapper from '../src/components/CustomArrowsWrapper';
 
 describe('Test CustomArrowsWrapper', () => {
