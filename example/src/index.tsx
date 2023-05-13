@@ -127,7 +127,7 @@ root.render(
           paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
           cardWidth={445}
           marginCard={16}
-          variant='withSideCards'
+          variant={['withSideCards', 'withoutPagination']}
           cards={cards.map(card => ({ ...card, key: card.id }))}
           noCardsText='No cards selected'
           CustomArrowBtn={<CustomArrowBtn />}
