@@ -32,6 +32,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Package version
+        run: yarn version [patch|minor|major|<version_no>]
+
       - name: Publish
         run: yarn publish --access public
 
