@@ -229,6 +229,21 @@ const CustomNoCardsBlock = (props: any) => {
 };
 ```
 
+### Several variants example of `Carousel`:
+
+```javascript
+<Carousel
+  i18n='cards'
+  header={<h1>Carousel</h1>}
+  cardWidth={445}
+  marginCard={16}
+  variant={['withSideCards', 'withoutArrows']}
+  cards={[]}
+>
+  <Card />
+</Carousel>
+```
+
 ### Example swipes of `Carousel` in mobile:
 
 ![Mobile Swipes](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/MobileSwipes.gif)
@@ -236,24 +251,24 @@ const CustomNoCardsBlock = (props: any) => {
 
 ### Props `Carousel`:
 
-| Name                     | Type                                   | Description                                       |
-|:-------------------------|----------------------------------------|:--------------------------------------------------|
-| header                   | `React.ReactNode`                      | Header of Carosel where you can                   |
-| cards                    | `any[]`                                | Cards array which will be shown inside `Carousel` |
-| disabled                 | `boolean`                              | To disable arrows                                 |
-| variant                  | `regular`<br/> `withSideCards` <br/> `withoutArrows`  <br/> `withoutPagination` | Variants for shoing `Carousel`.                   |
-| cardWidth                | `number`                               | Each card max width `Default = 300 px`            |
-| marginCard               | `number`                               | Margin between 2 cards                            |
-| noCardsText              | `string`                               | No cards text inside block.                       |
-| CustomArrowBtn           | `React.ReactNode`                      | Custom arrows for `Carousel`                      |
-| CustomPaginationBtn      | `React.ReactNode`                      | Custom Pagination for `Carousel`                  |
-| children                 | `React.ReactNode`                      | Cards inside `Carousel`                           |
-| defaultCardsCount        | `number`                               | How many cards will be shown on page by default   |
-| defaultActivePage        | `number`                               | Which page will be active by default              |
-| cardContainerStyles      | `React.CSSProperties`                  | Styles for cards container                        |
-| carouselContainerStyles  | `React.CSSProperties`                  | Styles for carousel container                     |
-| paginationButtonStyles   | `React.CSSProperties`                  | Styles for pagination button                      |
-| CustomNoCardsBlock       | `React.ReactNode`                      | Custom No cards Block                             |
+| Name                     | Type                                                                                              | Description                                       |
+|:-------------------------|---------------------------------------------------------------------------------------------------|:--------------------------------------------------|
+| header                   | `React.ReactNode`                                                                                 | Header of Carosel where you can                   |
+| cards                    | `any[]`                                                                                           | Cards array which will be shown inside `Carousel` |
+| disabled                 | `boolean`                                                                                         | To disable arrows                                 |
+| variant                  | `regular`<br/> `withSideCards` <br/> `withoutArrows`  <br/> `withoutPagination` <br/> `Variant[]` | Variants for shoing `Carousel`.                   |
+| cardWidth                | `number`                                                                                          | Each card max width `Default = 300 px`            |
+| marginCard               | `number`                                                                                          | Margin between 2 cards                            |
+| noCardsText              | `string`                                                                                          | No cards text inside block.                       |
+| CustomArrowBtn           | `React.ReactNode`                                                                                 | Custom arrows for `Carousel`                      |
+| CustomPaginationBtn      | `React.ReactNode`                                                                                 | Custom Pagination for `Carousel`                  |
+| children                 | `React.ReactNode`                                                                                 | Cards inside `Carousel`                           |
+| defaultCardsCount        | `number`                                                                                          | How many cards will be shown on page by default   |
+| defaultActivePage        | `number`                                                                                          | Which page will be active by default              |
+| cardContainerStyles      | `React.CSSProperties`                                                                             | Styles for cards container                        |
+| carouselContainerStyles  | `React.CSSProperties`                                                                             | Styles for carousel container                     |
+| paginationButtonStyles   | `React.CSSProperties`                                                                             | Styles for pagination button                      |
+| CustomNoCardsBlock       | `React.ReactNode`                                                                                 | Custom No cards Block                             |
 
 ## If you want to support
 

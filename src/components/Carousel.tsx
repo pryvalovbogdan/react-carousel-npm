@@ -64,7 +64,6 @@ const Carousel: React.FC<CarouselProps> = ({
     onCurrentPage(totalPageCount);
   }
 
-  console.log('isPaginationShown', isPaginationShown, isSideCardsShown);
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => setTouchStart(e.targetTouches[0].clientX);
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => setTouchEnd(e.targetTouches[0].clientX);
 
