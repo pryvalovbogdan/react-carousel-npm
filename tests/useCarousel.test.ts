@@ -19,7 +19,7 @@ describe('useCarousel', () => {
     selected: 3,
     cards,
     currentPage: 1,
-    variant: 'withSideCards' as const satisfies VariantType,
+    isSideCardsShown: true,
   };
 
   it('should return the correct selected cards for the first page', () => {

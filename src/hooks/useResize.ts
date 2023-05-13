@@ -6,7 +6,7 @@ export const useResize = ({
   setSelected,
   cardWidth,
   refCard,
-  variant,
+  isRegularCardsShown,
 }: UseResizeProps): UseResizeReturnedValues => {
   const [width, setWidth] = useState(0);
   const [widthCard, setWidthCard] = useState(cardWidth);
@@ -15,11 +15,11 @@ export const useResize = ({
     if (width) {
       const selected = Math.ceil(width / cardWidth);
 
-      const selectedCount = variant === 'regular' ? 1 : 2;
+      const selectedCount = isRegularCardsShown ? 1 : 2;
 
       setSelected(selected > 1 ? selected : selectedCount);
     }
-  }, [width, cardWidth, setSelected]);
+  }, [width, cardWidth, setSelected, isRegularCardsShown]);
 
   useLayoutEffect(() => {
     const updateSize = () => {

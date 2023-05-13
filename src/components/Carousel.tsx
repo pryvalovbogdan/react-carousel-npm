@@ -38,14 +38,25 @@ const Carousel: React.FC<CarouselProps> = ({
   const ref = useRef<HTMLDivElement>(null!);
   const refCard = useRef<HTMLDivElement>(null!);
 
+  const isPaginationShown: boolean = variant !== 'withoutPagination' && !variant.includes('withoutPagination');
+  const isArrowsShown: boolean = variant !== 'withoutArrows' && !variant.includes('withoutArrows');
+  const isSideCardsShown: boolean = variant === 'withSideCards' || variant.includes('withSideCards');
+  const isRegularCardsShown: boolean = variant === 'regular' || variant.includes('regular');
+
   const { rangeBottomPagination, totalPageCount, selectedCards } = useCarousel({
     selected,
     cards,
     currentPage,
-    variant,
+    isSideCardsShown,
   });
 
-  const { width, widthCard } = useResize({ ref, setSelected, cardWidth, refCard, variant } as UseResizeProps);
+  const { width, widthCard } = useResize({
+    ref,
+    setSelected,
+    cardWidth,
+    refCard,
+    isRegularCardsShown,
+  } as UseResizeProps);
 
   const lastPage = rangeBottomPagination && rangeBottomPagination[rangeBottomPagination.length - 1];
 
@@ -98,7 +109,7 @@ const Carousel: React.FC<CarouselProps> = ({
     >
       <div className={stylesCss['carousel-container__header']}>
         {header}
-        {variant !== 'withoutArrows' && totalPageCount > 1 && (
+        {isArrowsShown && totalPageCount > 1 && (
           <CustomArrowsWrapper
             CustomArrowBtn={CustomArrowBtn}
             currentPage={currentPage}
@@ -114,7 +125,7 @@ const Carousel: React.FC<CarouselProps> = ({
         style={cardContainerStyles}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
-        onTouchEnd={() => handleTouchEnd()}
+        onTouchEnd={handleTouchEnd}
       >
         <div ref={refCard} style={{ height: 0, width: '100%', maxWidth: cardWidth + 'px' }} />
         <div style={{ gap: marginCard + 'px', display: 'flex', width: '100%', ...cardContainerStyles }}>
@@ -132,7 +143,7 @@ const Carousel: React.FC<CarouselProps> = ({
             </>
           ) : (
             selectedCards.map((item, index) => {
-              if (variant === 'withSideCards') {
+              if (isSideCardsShown) {
                 if (totalPageCount > 1 && selectedCards.length < 2) {
                   return (
                     <div key='no-cards-container' className={stylesCss['no-cards-container']}>
@@ -173,7 +184,7 @@ const Carousel: React.FC<CarouselProps> = ({
           )}
         </div>
       </div>
-      {variant !== 'withoutPagination' && totalPageCount > 1 && (
+      {isPaginationShown && totalPageCount > 1 && (
         <div className={stylesCss['carousel-container__pagination-box']}>
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return CustomPaginationBtn ? (

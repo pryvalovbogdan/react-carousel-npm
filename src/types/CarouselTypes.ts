@@ -6,7 +6,7 @@ export interface CarouselProps {
   i18n: string;
   cards: any[];
   header?: React.ReactNode;
-  variant?: VariantType;
+  variant?: VariantType | VariantType[];
   children: React.ReactNode;
   cardWidth?: number;
   disabled?: boolean;
@@ -26,7 +26,7 @@ export interface UseCarouselProps {
   selected?: number | any;
   cards: any[];
   currentPage: number;
-  variant?: VariantType;
+  isSideCardsShown: boolean;
 }
 
 export interface UseCarouselReturnedValues {
@@ -40,7 +40,7 @@ export interface UseResizeProps {
   refCard: React.RefObject<any>;
   setSelected: (prop: number) => void;
   cardWidth: number;
-  variant: VariantType;
+  isRegularCardsShown: boolean;
 }
 
 export interface UseResizeReturnedValues {
