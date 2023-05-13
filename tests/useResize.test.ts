@@ -9,7 +9,8 @@ describe('useResize', () => {
     const cardWidth = 200;
 
     const { rerender } = renderHook(
-      ({ ref, setSelected, cardWidth }) => useResize({ ref, setSelected, cardWidth, refCard, variant: 'regular' }),
+      ({ ref, setSelected, cardWidth }) =>
+        useResize({ ref, setSelected, cardWidth, refCard, isRegularCardsShown: true }),
       {
         initialProps: { ref, setSelected, cardWidth },
       },
@@ -30,7 +31,7 @@ describe('useResize', () => {
     const setSelected = jest.fn();
     const cardWidth = 200;
 
-    renderHook(() => useResize({ ref, setSelected, cardWidth, refCard, variant: 'regular' }));
+    renderHook(() => useResize({ ref, setSelected, cardWidth, refCard, isRegularCardsShown: true }));
 
     expect(setSelected).not.toHaveBeenCalled();
   });
