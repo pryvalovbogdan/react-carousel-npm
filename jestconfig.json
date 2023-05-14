@@ -9,5 +9,10 @@
     "\\.(css|less|scss|sss|styl)$": "<rootDir>/node_modules/jest-css-modules"
   },
   "testEnvironment": "jsdom",
-  "ignore": ["dist"]
+  "ignore": ["dist"],
+  "coverageThreshold": {
+    "global": {
+      "lines": "80"
+    }
+  }
 }
