@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom/client';
-import { Carousel } from 'react-carousel-cards-npm';
+import React, { CSSProperties } from 'react';
+import ReactDOM from 'react-dom/client';
+import { Carousel, CarouselContextProvider, useCarouselContext } from 'react-carousel-cards-npm';
 import '../styles.css';
 
 const Card = (props: any) => {
@@ -105,6 +105,32 @@ const cards = [
   },
 ];
 
+const CustomArrowsPreview = () => {
+  const { handlePrevPage, currentPage, handleNextPage, totalPageCount } = useCarouselContext();
+
+  const btnStyles: CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    border: 'none',
+    background: 'cornflowerblue',
+    padding: '14px',
+    cursor: 'pointer',
+  };
+
+  console.log('currentPage', currentPage);
+
+  return (
+    <>
+      <button style={{ ...btnStyles, left: 0 }} onClick={handlePrevPage} disabled={currentPage === 1}>
+        prev
+      </button>
+      <button style={{ ...btnStyles, right: 0 }} onClick={handleNextPage} disabled={currentPage === totalPageCount}>
+        next
+      </button>
+    </>
+  );
+};
+
 root.render(
   <React.StrictMode>
     <div
@@ -121,21 +147,25 @@ root.render(
           position: 'relative',
         }}
       >
-        <Carousel
-          i18n='cards'
-          header={<h1>Regular Carousel</h1>}
-          paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
-          cardWidth={445}
-          marginCard={16}
-          variant={['withSideCards', 'withoutPagination']}
-          cards={cards.map(card => ({ ...card, key: card.id }))}
-          noCardsText='No cards selected'
-          CustomArrowBtn={<CustomArrowBtn />}
-          CustomPaginationBtn={<CustomPaginationBtn />}
-          CustomNoCardsBlock={<CustomNoCardsBlock />}
-        >
-          <Card />
-        </Carousel>
+        {/** Necessary to cover Carousel inside provider for correct work if you want to use useCarouselContext */}
+        <CarouselContextProvider>
+          <Carousel
+            i18n='cards'
+            header={<h1>Use Carousel Context</h1>}
+            paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
+            cardWidth={445}
+            marginCard={16}
+            variant={['regular', 'withoutArrows']}
+            cards={cards.map(card => ({ ...card, key: card.id }))}
+            noCardsText='No cards selected'
+            CustomArrowBtn={<CustomArrowBtn />}
+            CustomPaginationBtn={<CustomPaginationBtn />}
+            CustomNoCardsBlock={<CustomNoCardsBlock />}
+          >
+            <Card />
+          </Carousel>
+          <CustomArrowsPreview />
+        </CarouselContextProvider>
       </div>
     </div>
   </React.StrictMode>,

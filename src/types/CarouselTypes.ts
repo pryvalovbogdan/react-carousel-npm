@@ -30,7 +30,6 @@ export interface UseCarouselProps {
 }
 
 export interface UseCarouselReturnedValues {
-  rangeBottomPagination: any[];
   totalPageCount: number;
   selectedCards: any[];
 }
@@ -75,4 +74,13 @@ export interface ICustomArrowsWrapper {
   lastPage: number;
   handlePrevPage: () => void;
   handleNextPage: () => void;
+}
+
+export interface ICarouselContext {
+  currentPage?: number;
+  handleNextPage: () => void;
+  handlePrevPage: () => void;
+  onCurrentPage: (page: number) => void;
+  totalPageCount: number;
+  onTotalPageCountChange: (page: number) => void;
 }

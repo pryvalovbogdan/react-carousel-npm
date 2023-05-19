@@ -17,3 +17,9 @@ export const renderChild = (child: React.ReactNode, props?: any) => {
 
   return child;
 };
+
+export const setNextPage = (callback: (page: (prevState: number) => number) => void) => () =>
+  callback((prevState: number) => prevState + 1);
+
+export const setPrevPage = (callback: (page: (prevState: number) => number) => void) => () =>
+  callback(prevState => (prevState < 2 ? 1 : prevState - 1));
