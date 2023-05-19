@@ -61,7 +61,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const isSideCardsShown: boolean = variant === 'withSideCards' || variant.includes('withSideCards');
   const isRegularCardsShown: boolean = variant === 'regular' || variant.includes('regular');
 
-  const { rangeBottomPagination, totalPageCount, selectedCards } = useCarousel({
+  const { totalPageCount, selectedCards } = useCarousel({
     selected,
     cards,
     currentPage,
@@ -146,6 +146,7 @@ const Carousel: React.FC<CarouselProps> = ({
       </div>
       <div
         className={stylesCss['carousel-container__body']}
+        data-testid='carousel-container__body'
         style={cardContainerStyles}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}

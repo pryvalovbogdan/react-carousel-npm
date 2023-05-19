@@ -64,4 +64,73 @@ describe('Carousel test render', () => {
     const activePageButton = getByTestId('pagination-Button1');
     expect(activePageButton).toHaveStyle('background-color: hsla(200, 85%, 60%, 0.8)');
   });
+
+  it('should call handlePrevPage on ArrowLeft keydown', () => {
+    const { getByTestId } = render(
+      <CarouselContextProvider>
+        <Carousel i18n={'Cards'} cards={mockCards} defaultCardsCount={1} defaultActivePage={3}>
+          <Card />
+        </Carousel>
+      </CarouselContextProvider>,
+    );
+    const body = getByTestId('carousel-container__body');
+
+    fireEvent.keyDown(body, {
+      key: 'ArrowLeft',
+      code: 'ArrowLeft',
+    });
+
+    const activePageButton = getByTestId('pagination-Button2');
+    expect(activePageButton).toHaveStyle('background-color: hsla(200, 85%, 60%, 0.8)');
+  });
+
+  it('should call handleNextPage on ArrowRight keydown', () => {
+    const { getByTestId } = render(
+      <CarouselContextProvider>
+        <Carousel i18n={'Cards'} cards={mockCards} defaultCardsCount={1} defaultActivePage={1}>
+          <Card />
+        </Carousel>
+      </CarouselContextProvider>,
+    );
+    const body = getByTestId('carousel-container__body');
+
+    fireEvent.keyDown(body, {
+      key: 'ArrowRight',
+      code: 'ArrowRight',
+    });
+
+    const activePageButton = getByTestId('pagination-Button2');
+    expect(activePageButton).toHaveStyle('background-color: hsla(200, 85%, 60%, 0.8)');
+  });
+
+  it('should call onCurrentPage in CustomPaginationBtn', () => {
+    const CustomPaginationBtn = (props: any) => {
+      const { isActivePage, ...rest } = props;
+
+      return (
+        <button {...rest} className={'pagination-Button'} style={{ backgroundColor: isActivePage ? 'orange' : 'grey' }}>
+          click
+        </button>
+      );
+    };
+
+    const { container } = render(
+      <CarouselContextProvider>
+        <Carousel
+          i18n={'Cards'}
+          cards={mockCards}
+          defaultCardsCount={1}
+          defaultActivePage={1}
+          CustomPaginationBtn={<CustomPaginationBtn />}
+        >
+          <Card />
+        </Carousel>
+      </CarouselContextProvider>,
+    );
+    const btn = container.getElementsByClassName('pagination-Button')[2];
+
+    fireEvent.click(btn);
+
+    expect(btn).toHaveStyle('background-color: orange;');
+  });
 });

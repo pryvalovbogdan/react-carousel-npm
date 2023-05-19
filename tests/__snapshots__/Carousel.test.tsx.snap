@@ -32,6 +32,7 @@ exports[`Carousel test render snapshot Carousel 1`] = `
       </div>
       <div
         class="carousel-container__body"
+        data-testid="carousel-container__body"
       >
         <div
           style="height: 0px; width: 100%; max-width: 300px;"

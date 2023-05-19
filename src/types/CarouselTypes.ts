@@ -30,7 +30,6 @@ export interface UseCarouselProps {
 }
 
 export interface UseCarouselReturnedValues {
-  rangeBottomPagination: any[];
   totalPageCount: number;
   selectedCards: any[];
 }

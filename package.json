@@ -23,7 +23,11 @@
   },
   "keywords": [
     "carousel",
-    "cards"
+    "cards",
+    "pagination",
+    "slider",
+    "react",
+    "react-component"
   ],
   "author": "Bogdan Pryvalov",
   "license": "MIT",
