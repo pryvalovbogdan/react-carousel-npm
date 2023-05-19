@@ -1,0 +1,33 @@
+name: 'show coverage'
+on:
+  pull_request_target:
+    branches:
+      - main
+jobs:
+  coverage:
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        # Setup node environment
+        uses: actions/setup-node@v3
+        with:
+          # Node version. Run "node -v" to check the latest version
+          node-version: 16.x
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: yarn && yarn install
+
+      - name: Run tests
+        run: |
+          npx jest --config jestconfig.json --coverage --coverageReporters json-summary
+
+      - name: Jest Coverage Comment
+        uses: MishaKav/jest-coverage-comment@main
+        with:
+          coverage-summary-path: ./coverage/coverage-summary.json
