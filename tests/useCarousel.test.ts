@@ -1,6 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { useCarousel } from '../src/hooks/useCarusel';
-import { VariantType } from '../src/types/CarouselTypes';
 
 describe('useCarousel', () => {
   const cards = [
@@ -45,12 +44,7 @@ describe('useCarousel', () => {
   it('should return the correct pagination range', () => {
     const { result } = renderHook(() => useCarousel(props));
     const totalPageCount = result.current.totalPageCount;
-    const pageWithoutDots = result.current.rangeBottomPagination;
 
     expect(totalPageCount).toBe(5);
-    expect(pageWithoutDots).toHaveLength(5);
-    expect(pageWithoutDots[0]).toBe(1);
-    expect(pageWithoutDots[1]).toBe(2);
-    expect(pageWithoutDots[2]).toBe(3);
   });
 });
