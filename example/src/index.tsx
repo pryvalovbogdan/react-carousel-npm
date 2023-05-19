@@ -111,6 +111,7 @@ const CustomArrowsPreview = () => {
   const btnStyles: CSSProperties = {
     position: 'absolute',
     top: '50%',
+    border: 'none',
     background: 'cornflowerblue',
     padding: '14px',
     cursor: 'pointer',
@@ -150,15 +151,15 @@ root.render(
         <CarouselContextProvider>
           <Carousel
             i18n='cards'
-            header={<h1>Regular Carousel</h1>}
+            header={<h1>Use Carousel Context</h1>}
             paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
             cardWidth={445}
             marginCard={16}
-            variant={['withSideCards', 'withoutPagination']}
+            variant={['regular', 'withoutArrows']}
             cards={cards.map(card => ({ ...card, key: card.id }))}
             noCardsText='No cards selected'
-            // CustomArrowBtn={<CustomArrowBtn />}
-            // CustomPaginationBtn={<CustomPaginationBtn />}
+            CustomArrowBtn={<CustomArrowBtn />}
+            CustomPaginationBtn={<CustomPaginationBtn />}
             CustomNoCardsBlock={<CustomNoCardsBlock />}
           >
             <Card />

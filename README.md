@@ -244,10 +244,66 @@ const CustomNoCardsBlock = (props: any) => {
 </Carousel>
 ```
 
+![UseCarouselContext Usage](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/UseContextExample.gif)
+
+### Custom `Arrows` using `useCarouselContext`:
+
+Create custom arrows and get handles from `useCarouselContext`:
+
+```javascript
+const CustomArrowsPreview = () => {
+  const { handlePrevPage, currentPage, handleNextPage, totalPageCount } = useCarouselContext();
+
+  const btnStyles: CSSProperties = {
+    position: 'absolute',
+    top: '50%',
+    border: 'none',
+    background: 'cornflowerblue',
+    padding: '14px',
+    cursor: 'pointer',
+  };
+
+  console.log('currentPage', currentPage);
+
+  return (
+    <>
+      <button style={{ ...btnStyles, left: 0 }} onClick={handlePrevPage} disabled={currentPage === 1}>
+        prev
+      </button>
+      <button style={{ ...btnStyles, right: 0 }} onClick={handleNextPage} disabled={currentPage === totalPageCount}>
+        next
+      </button>
+    </>
+  );
+};
+
+```
+
+Necessary to cover `Carousel` and `CustomArrowsPreview` inside provider for correct work if you want to use `useCarouselContext`:
+
+```javascript
+<CarouselContextProvider>
+  <Carousel
+    i18n='cards'
+    header={<h1>Use Carousel Context</h1>}
+    paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
+    cardWidth={445}
+    marginCard={16}
+    defaultActivePage={2}
+    variant={['regular', 'withoutArrows']}
+    cards={cards.map(card => ({ ...card, key: card.id }))}
+    noCardsText='No cards selected'
+    CustomNoCardsBlock={<CustomNoCardsBlock />}
+  >
+    <Card />
+  </Carousel>
+  <CustomArrowsPreview />
+</CarouselContextProvider>
+```
+
 ### Example swipes of `Carousel` in mobile:
 
 ![Mobile Swipes](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/MobileSwipes.gif)
-
 
 ### Props `Carousel`:
 
@@ -269,6 +325,19 @@ const CustomNoCardsBlock = (props: any) => {
 | carouselContainerStyles  | `React.CSSProperties`                                                                             | Styles for carousel container                     |
 | paginationButtonStyles   | `React.CSSProperties`                                                                             | Styles for pagination button                      |
 | CustomNoCardsBlock       | `React.ReactNode`                                                                                 | Custom No cards Block                             |
+
+
+### Props `useCarouselContext`:
+
+| Name                     | Type                      | Description                    |
+|:-------------------------|---------------------------|:-------------------------------|
+| currentPage              | `number`                  | Active selected page           |
+| totalPageCount           | `number`                  | Total pages count              |
+| handleNextPage           | `() => void`              | Handle to switch to next page  |
+| handlePrevPage           | `() => void`              | Handle to switch to prev page  |
+| onCurrentPage            | `(page: number) => void`  | Set state to exact page        |
+| onTotalPageCountChange   | `(count: number) => void` | Set state to exact total count |
+
 
 ## If you want to support
 
