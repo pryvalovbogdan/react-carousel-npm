@@ -8,6 +8,7 @@ import stylesCss from '../styles/carousel.module.css';
 import SideCard from './SideCard';
 import CustomArrowsWrapper from './CustomArrowsWrapper';
 import { useCarouselContext } from '../hooks/useCaruselContext';
+import { useAnimation } from '../hooks/useAnimation';
 
 const Carousel: React.FC<CarouselProps> = ({
   i18n,
@@ -27,6 +28,7 @@ const Carousel: React.FC<CarouselProps> = ({
   CustomArrowBtn,
   CustomPaginationBtn,
   CustomNoCardsBlock,
+  withAnimation,
 }) => {
   const [selected, setSelected] = useState<number>(defaultCardsCount || 3);
   const [touchStart, setTouchStart] = useState<number>(0);
@@ -76,6 +78,8 @@ const Carousel: React.FC<CarouselProps> = ({
     isRegularCardsShown,
   } as UseResizeProps);
 
+  const { isAnimate } = useAnimation({ withAnimation, selectedCards });
+
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => setTouchStart(e.targetTouches[0].clientX);
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => setTouchEnd(e.targetTouches[0].clientX);
 
@@ -108,6 +112,10 @@ const Carousel: React.FC<CarouselProps> = ({
     }
   };
 
+  const paginationHandle = (index: number) => {
+    onCurrentPage(index + 1);
+  };
+
   useEffect(() => {
     if (defaultActivePage) {
       onCurrentPage(defaultActivePage);
@@ -123,7 +131,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
     return () => window.removeEventListener('keydown', keyDownHandle);
   }, [keyDownHandle]);
-
+  console.log('isAnimate', isAnimate, withAnimation);
   return (
     <div
       className={stylesCss['carousel-container']}
@@ -153,7 +161,19 @@ const Carousel: React.FC<CarouselProps> = ({
         onTouchEnd={handleTouchEnd}
       >
         <div ref={refCard} style={{ height: 0, width: '100%', maxWidth: cardWidth + 'px' }} />
-        <div style={{ gap: marginCard + 'px', display: 'flex', width: '100%', ...cardContainerStyles }}>
+        <div
+          style={{
+            gap: marginCard + 'px',
+            display: 'flex',
+            width: '100%',
+            ...(withAnimation && {
+              opacity: isAnimate ? '1' : '0',
+              transition: 'opacity 0.5s ease-in-out',
+            }),
+            ...(withAnimation?.animateIn && isAnimate ? withAnimation.animateIn : withAnimation?.animateOut),
+            ...cardContainerStyles,
+          }}
+        >
           {!cards.length ? (
             <>
               {CustomNoCardsBlock ? (
@@ -168,6 +188,16 @@ const Carousel: React.FC<CarouselProps> = ({
             </>
           ) : (
             selectedCards.map((item, index) => {
+              if (!isAnimate && withAnimation) {
+                return renderChildren(children, {
+                  ...item,
+                  style: {
+                    maxWidth: cardWidth,
+                    visibility: 'hidden',
+                  },
+                });
+              }
+
               if (isSideCardsShown) {
                 if (totalPageCount > 1 && selectedCards.length < 2) {
                   return (
@@ -214,7 +244,7 @@ const Carousel: React.FC<CarouselProps> = ({
           {[...cards].splice(0, totalPageCount).map((item, index) => {
             return CustomPaginationBtn ? (
               renderChild(CustomPaginationBtn, {
-                onClick: () => onCurrentPage(index + 1),
+                onClick: () => paginationHandle(index),
                 key: `${item.key}-button`,
                 disabled: disabled,
                 isActivePage: currentPage === index + 1,
@@ -224,7 +254,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 className={stylesCss['pagination-button']}
                 disabled={disabled}
                 key={`${item.key}-button`}
-                onClick={() => onCurrentPage(index + 1)}
+                onClick={() => paginationHandle(index)}
                 style={{
                   ...paginationButtonStyles,
                   cursor: disabled ? 'not-allowed' : 'pointer',

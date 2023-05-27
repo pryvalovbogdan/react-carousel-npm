@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 export type VariantType = 'regular' | 'withoutArrows' | 'withoutPagination' | 'withSideCards';
+export type WithAnimationType = { animateIn: CSSProperties; animateOut: CSSProperties; animationInterval: number };
 
 export interface CarouselProps {
   i18n: string;
@@ -20,6 +21,7 @@ export interface CarouselProps {
   carouselContainerStyles?: React.CSSProperties;
   paginationButtonStyles?: React.CSSProperties;
   CustomNoCardsBlock?: React.ReactNode;
+  withAnimation?: WithAnimationType;
 }
 
 export interface UseCarouselProps {
@@ -83,4 +85,13 @@ export interface ICarouselContext {
   onCurrentPage: (page: number) => void;
   totalPageCount: number;
   onTotalPageCountChange: (page: number) => void;
+}
+
+export interface UseAnimationReturnedValues {
+  isAnimate: boolean;
+}
+
+export interface UseAnimationProps {
+  withAnimation?: WithAnimationType;
+  selectedCards: any[];
 }
