@@ -21,7 +21,7 @@ export interface CarouselProps {
   carouselContainerStyles?: React.CSSProperties;
   paginationButtonStyles?: React.CSSProperties;
   CustomNoCardsBlock?: React.ReactNode;
-  withAnimation?: WithAnimationType | boolean;
+  withAnimation?: WithAnimationType;
 }
 
 export interface UseCarouselProps {
