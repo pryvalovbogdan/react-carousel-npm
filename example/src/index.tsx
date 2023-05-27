@@ -14,6 +14,7 @@ const Card = (props: any) => {
         flexDirection: 'column',
         boxShadow: '0px 10px 15px 0px rgba(0,0,0,0.1)',
         borderRadius: '8px',
+        maxHeight: '300px',
         /** Add wrapper to card and path to styles={props.style} for correct displaying **/
         ...props.style,
       }}
@@ -160,6 +161,11 @@ root.render(
             noCardsText='No cards selected'
             CustomArrowBtn={<CustomArrowBtn />}
             CustomPaginationBtn={<CustomPaginationBtn />}
+            withAnimation={{
+              animateIn: { opacity: '1', transition: 'opacity 0.5s ease-in-out' },
+              animateOut: { opacity: '0', transition: 'opacity 0.5s ease-in-out' },
+              animationInterval: 500,
+            }}
             CustomNoCardsBlock={<CustomNoCardsBlock />}
           >
             <Card />
