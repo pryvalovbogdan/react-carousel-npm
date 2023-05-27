@@ -162,8 +162,8 @@ root.render(
             CustomArrowBtn={<CustomArrowBtn />}
             CustomPaginationBtn={<CustomPaginationBtn />}
             withAnimation={{
-              animateIn: { opacity: '1', transition: 'opacity 0.3s ease-in-out' },
-              animateOut: { opacity: '0', transition: 'opacity 0.3s ease-in-out' },
+              animateIn: { opacity: '1', transition: 'opacity 0.5s ease-in-out' },
+              animateOut: { opacity: '0', transition: 'opacity 0.5s ease-in-out' },
               animationInterval: 500,
             }}
             CustomNoCardsBlock={<CustomNoCardsBlock />}

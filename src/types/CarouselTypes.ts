@@ -21,7 +21,7 @@ export interface CarouselProps {
   carouselContainerStyles?: React.CSSProperties;
   paginationButtonStyles?: React.CSSProperties;
   CustomNoCardsBlock?: React.ReactNode;
-  withAnimation?: WithAnimationType;
+  withAnimation?: WithAnimationType | boolean;
 }
 
 export interface UseCarouselProps {
@@ -89,6 +89,7 @@ export interface ICarouselContext {
 
 export interface UseAnimationReturnedValues {
   isAnimate: boolean;
+  disableAnimation: () => void;
 }
 
 export interface UseAnimationProps {

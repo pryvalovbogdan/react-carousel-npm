@@ -301,6 +301,34 @@ Necessary to cover `Carousel` and `CustomArrowsPreview` inside provider for corr
 </CarouselContextProvider>
 ```
 
+
+![Custom Animation](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/UseAnimation.gif)
+
+### `withAnimation` prop of `Carousel`:
+
+### Several variants example of `Carousel`:
+
+```javascript
+<Carousel 
+  i18n='cards'
+  header={<h1>Use Carousel Context</h1>}
+  paginationButtonStyles={{ cursor: 'pointer', marginBottom: '10px' }}
+  cardWidth={445}
+  marginCard={16}
+  variant={['regular', 'withoutArrows']}
+  cards={cards.map(card => ({ ...card, key: card.id }))}
+  noCardsText='No cards selected'
+  withAnimation={{
+	animateIn: { opacity: '1', transition: 'opacity 0.5s ease-in-out' },
+    animateOut: { opacity: '0', transition: 'opacity 0.5s ease-in-out' },
+    animationInterval: 500,
+  }}
+  CustomNoCardsBlock={<CustomNoCardsBlock />}
+>
+  <Card />
+</Carousel>
+```
+
 ### Example swipes of `Carousel` in mobile:
 
 ![Mobile Swipes](https://github.com/pryvalovbogdan/react-carousel-npm/blob/main/public/MobileSwipes.gif)
@@ -325,6 +353,7 @@ Necessary to cover `Carousel` and `CustomArrowsPreview` inside provider for corr
 | carouselContainerStyles  | `React.CSSProperties`                                                                             | Styles for carousel container                     |
 | paginationButtonStyles   | `React.CSSProperties`                                                                             | Styles for pagination button                      |
 | CustomNoCardsBlock       | `React.ReactNode`                                                                                 | Custom No cards Block                             |
+| withAnimation            | `{ animateIn: CSSProperties; animateOut: CSSProperties; animationInterval: number } or boolean`   | For adding custom animation or setting default    |
 
 
 ### Props `useCarouselContext`:

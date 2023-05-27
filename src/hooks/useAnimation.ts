@@ -28,5 +28,5 @@ export const useAnimation = ({ withAnimation, selectedCards }: UseAnimationProps
     disableAnimation();
   }, [JSON.stringify(selectedCards)]);
 
-  return { isAnimate };
+  return { isAnimate, disableAnimation };
 };
