@@ -131,7 +131,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
     return () => window.removeEventListener('keydown', keyDownHandle);
   }, [keyDownHandle]);
-  console.log('isAnimate', isAnimate, withAnimation);
+
   return (
     <div
       className={stylesCss['carousel-container']}
