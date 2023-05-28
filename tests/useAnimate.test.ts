@@ -14,17 +14,13 @@ describe('useAnimation', () => {
   });
 
   test('should enable animation when withAnimation is truthy and isAnimate is false', () => {
-    const { result } = renderHook(() =>
-      useAnimation({ withAnimation, selectedCards: [] }),
-    );
+    const { result } = renderHook(() => useAnimation({ withAnimation, selectedCards: [] }));
 
     expect(result.current.isAnimate).toBe(false);
   });
 
   test('should disable animation when disableAnimation is called', () => {
-    const { result } = renderHook(() =>
-      useAnimation({ withAnimation, selectedCards: [] }),
-    );
+    const { result } = renderHook(() => useAnimation({ withAnimation, selectedCards: [] }));
 
     act(() => {
       result.current.disableAnimation();
@@ -94,9 +90,7 @@ describe('useAnimation', () => {
   });
 
   test('should clear the interval on unmount', () => {
-    const { result, unmount } = renderHook(() =>
-      useAnimation({ withAnimation, selectedCards: [] }),
-    );
+    const { result, unmount } = renderHook(() => useAnimation({ withAnimation, selectedCards: [] }));
 
     act(() => {
       unmount();

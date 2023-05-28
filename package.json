@@ -8,7 +8,7 @@
   "scripts": {
     "test": "jest --config jestconfig.json --coverage --updateSnapshot",
     "prepublish": "rm -rf ./dist && npm run build",
-    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\"",
+    "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\" --fix",
     "build": "yarn build:esm && yarn copy-styles:esm && yarn build:cjs && yarn copy-styles:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module commonjs --outDir dist/cjs",
