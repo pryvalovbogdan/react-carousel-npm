@@ -14,7 +14,7 @@ const Card = (props: any) => {
         flexDirection: 'column',
         boxShadow: '0px 10px 15px 0px rgba(0,0,0,0.1)',
         borderRadius: '8px',
-        maxHeight: '300px',
+        maxHeight: '350px',
         /** Add wrapper to card and path to styles={props.style} for correct displaying **/
         ...props.style,
       }}
@@ -25,7 +25,9 @@ const Card = (props: any) => {
         width={'100%'}
         style={{ borderRadius: '8px 8px 0 0', objectFit: 'cover', width: props.width, maxWidth: props.maxWidth }}
       />
-      <div style={{ padding: '16px', fontSize: '18px', fontWeight: 700, borderRadius: '0 0 8px 8px' }}>
+      <div
+        style={{ padding: '16px', fontSize: '18px', fontWeight: 700, borderRadius: '0 0 8px 8px', minHeight: '40px' }}
+      >
         {props.name}
       </div>
     </div>
