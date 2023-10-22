@@ -21,10 +21,10 @@ export const useCarousel = ({
     let totalPageCount = totalCount / selected;
 
     if (isSideCardsShown) {
-      totalPageCount += ((totalCount / selected) * 2 - 1) / selected;
+      totalPageCount += ((totalCount / selected) * 2) / selected;
     }
 
-    const totalPageCountRound = Math.ceil(totalPageCount);
+    const totalPageCountRound = Math.round(totalPageCount);
 
     return { totalPageCount: totalPageCountRound };
   }, [totalCount, selected, isSideCardsShown]);

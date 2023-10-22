@@ -127,6 +127,13 @@ const Carousel: React.FC<CarouselProps> = ({
   }, [totalPageCount, onTotalPageCountChange]);
 
   useEffect(() => {
+    if (currentPage > totalPageCount) {
+      setCurrentPageLocal(totalPageCount);
+      contextOnCurrentPage(totalPageCount);
+    }
+  }, [totalPageCount, currentPage]);
+
+  useEffect(() => {
     window.addEventListener('keydown', keyDownHandle);
 
     return () => window.removeEventListener('keydown', keyDownHandle);
@@ -199,14 +206,6 @@ const Carousel: React.FC<CarouselProps> = ({
               }
 
               if (isSideCardsShown) {
-                if (totalPageCount > 1 && selectedCards.length < 2) {
-                  return (
-                    <div key='no-cards-container' className={stylesCss['no-cards-container']}>
-                      <span className={stylesCss['carousel-container__text']}>{noCardsText}</span>
-                    </div>
-                  );
-                }
-
                 if (
                   (index === 0 && currentPage !== 1) ||
                   (selected < selectedCards.length && index === selectedCards.length - 1) ||
