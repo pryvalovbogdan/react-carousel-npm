@@ -15,7 +15,8 @@
     "prepare": "npm run build",
     "copy-styles:esm": "copyfiles -u 1 src/**/*.css dist/esm",
     "copy-styles:cjs": "copyfiles -u 1 src/**/*.css dist/cjs",
-    "prepublishOnly": "npm run lint && npm run test"
+    "prepublishOnly": "npm run lint && npm run test",
+    "build:css": "postcss -o main.css src/styles/*.css"
   },
   "repository": {
     "type": "git",
@@ -51,7 +52,9 @@
     "@types/styled-system__should-forward-prop": "^5.1.2",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
+    "autoprefixer": "^10.4.14",
     "copyfiles": "^2.4.1",
+    "cssnano": "^6.0.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -61,6 +64,8 @@
     "jest-canvas-mock": "^2.5.0",
     "jest-css-modules": "^2.1.0",
     "jest-environment-jsdom": "^29.5.0",
+    "postcss": "^8.4.21",
+    "postcss-cli": "^10.1.0",
     "prettier": "^2.8.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
